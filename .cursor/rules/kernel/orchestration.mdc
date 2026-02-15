@@ -1,0 +1,89 @@
+---
+description: 4-Phase Workflow, Skill Composition, Parallel Agent Dispatch 등 복잡한 작업의 오케스트레이션 전략. 3개 이상 파일 변경, 새 Feature, 대규모 리팩토링 등 Complex Task 시 적용.
+alwaysApply: false
+source: origin
+---
+
+# Orchestration — 작업 오케스트레이션 전략
+
+> 이 룰은 의도적으로 "Applied intelligently" 방식이며, 스킬로 마이그레이션하지 않습니다.
+
+복잡한 작업 시 자동 적용되는 오케스트레이션 전략입니다.
+
+## 4-Phase Workflow (Orchestrator Pattern)
+
+작업 복잡도에 따라 적절한 워크플로우를 선택합니다.
+
+### Complex Tasks (3개 이상 파일, 새 Feature, 대규모 리팩토링)
+
+```
+Phase 0 (Analyze):  analyst → 요구사항 정제 + 리스크 사전 식별
+Phase 1 (Plan):     planner → critic (기획 + 검증)
+                    필요 시 architect subagent_type (구조 결정)
+Phase 2 (Execute):  implementer (구현)
+Phase 3 (Verify):   reviewer + qa-tester subagent_type (검증)
+→ 실패 시 Phase 2로 회귀 (Ralph Loop, 최대 iteration)
+```
+
+### Medium Tasks (버그 수정, 단일 API 추가, 마이그레이션)
+
+```
+debugger 또는 implementer 또는 migrator subagent_type (구현)
+→ reviewer (검증)
+```
+
+### Simple Tasks (단일 파일 수정, 질문, 설명)
+
+Subagent 없이 오케스트레이터가 직접 처리합니다 (overhead 방지).
+
+### Autonomous Mode (대규모 자율 작업)
+
+`/ralph` 또는 `/autopilot` 커맨드 사용:
+- Ralph Loop: 완료까지 멈추지 않는 자기참조 루프
+- Autopilot: 병렬 에이전트 최대 성능 파이프라인
+
+---
+
+## Skill Composition (3-Layer 아키텍처)
+
+스킬은 3개 레이어로 구성되며, 레이어를 조합하여 실행 전략을 결정합니다:
+
+```
+Guarantee Layer (선택, 0-1):  ralph — "검증 완료까지 멈추지 않음"
+Enhancement Layer (0-N):      autopilot(병렬) | tdd(테스트우선) | ecomode(절약)
+Execution Layer (필수, 1):    default(구현) | orchestrate(조율) | planner(기획)
+```
+
+공식: [Execution] + [0-N Enhancement] + [Optional Guarantee]
+
+예시:
+- "ralph: refactor auth" → default + ralph (구현 + 완료 보장)
+- "autopilot tdd: implement login" → default + autopilot + tdd (구현 + 병렬 + TDD)
+- "eco fix errors" → default + ecomode (구현 + 토큰 절약)
+- "plan the API" → planner (기획만)
+
+---
+
+## Parallel Agent Dispatch
+
+독립적인 작업은 Task tool로 병렬 실행합니다 (최대 4개):
+
+- 분석 단계: analyst + deep-search 동시 실행
+- 기획 단계: planner + deep-search 동시 실행
+- 구현 완료 후: reviewer + qa-tester subagent_type 동시 실행
+- 탐색 단계: Grep + SemanticSearch + Glob 동시 실행
+
+---
+
+## Completion Criteria Reference
+
+verify-loop 스킬에 정의된 4-Level 기준을 참조합니다:
+
+| Level | 이름 | 적용 상황 |
+|-------|------|----------|
+| 1 | Minimal | 단순 수정 |
+| 2 | Standard | 일반 작업 |
+| 3 | Thorough | Feature 구현 |
+| 4 | Production | 릴리즈 |
+
+프로젝트 설정의 `defaults.completionLevel`이 프로젝트 기본값을 결정합니다.

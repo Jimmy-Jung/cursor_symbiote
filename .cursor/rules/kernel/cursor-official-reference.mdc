@@ -1,0 +1,269 @@
+---
+description: ".cursor/ 디렉터리 내 파일(rules, commands, skills, agents, hooks)을 생성하거나 수정할 때 Cursor 공식 스펙을 준수하도록 강제합니다. .cursor 자기 진화(self-evolution)의 품질 게이트 역할을 합니다."
+alwaysApply: false
+globs:
+  - ".cursor/**/*.md"
+  - ".cursor/**/*.mdc"
+  - ".cursor/hooks.json"
+  - ".cursor/hooks/**/*.sh"
+  - ".cursor/hooks/**/*.py"
+source: origin
+---
+
+# Cursor Official Reference Gate
+
+.cursor/ 디렉터리 내 파일을 생성하거나 수정할 때, 반드시 이 룰의 가이드라인을 따릅니다.
+공식 레퍼런스 원본: `.cursor/docs/cursor-official-reference.md`
+
+---
+
+## 적용 원칙
+
+1. .cursor/ 내부 파일을 생성/수정하기 전에 이 룰의 해당 섹션 체크리스트를 확인합니다
+2. 불확실한 스펙이 있으면 `.cursor/docs/cursor-official-reference.md`를 Read tool로 읽어 확인합니다
+3. 기존 파일을 수정할 때는 현재 형식을 먼저 읽고, 공식 스펙과의 차이를 파악한 후 수정합니다
+
+---
+
+## 시스템 스킬 충돌 방지
+
+Cursor 시스템 기본 스킬(`~/.cursor/skills-cursor/`)과 프로젝트 설정이 충돌할 때, 프로젝트 규칙이 우선합니다:
+
+### 마이그레이션 보호
+- `rules/kernel/*.mdc`는 마이그레이션 대상이 아닙니다. 이 룰들은 의도적으로 "Applied intelligently"로 설계되었으며 스킬로 변환하면 안 됩니다
+- `commands/*.md`는 프로젝트 고유 워크플로우이며, 시스템 `migrate-to-skills` 스킬의 자동 변환 대상에서 제외합니다
+- 마이그레이션 요청 시 반드시 사용자에게 영향 범위를 설명하고 승인을 받습니다
+
+### 생성 기준 우선순위
+- 룰 생성 시: 시스템 `create-rule`(50줄 제한)이 아닌 이 문서의 기준(500줄 이하)을 따릅니다
+- 스킬 생성 시: frontmatter에 `source: custom` 태그를 반드시 포함합니다
+- 에이전트 생성 시: `model`, `readonly` 필드를 반드시 포함합니다 (시스템 `create-subagent`는 이를 생략)
+
+---
+
+## 1. Rules (.cursor/rules/**/*.md, *.mdc)
+
+파일 형식: YAML frontmatter + 마크다운
+
+필수 체크:
+- [ ] frontmatter에 `description` 필드가 있는가
+- [ ] `alwaysApply`, `globs` 중 적어도 하나의 적용 방식이 명시되어 있는가
+- [ ] 500줄 이하인가
+- [ ] 모호한 가이드가 아닌 구체적 지시사항인가
+- [ ] 파일 내용을 복사하지 않고 파일 경로를 참조하는가
+
+적용 방식 결정:
+
+| 의도 | 설정 |
+|------|------|
+| 모든 세션에 항상 적용 | `alwaysApply: true` |
+| Agent가 상황 판단 후 적용 | `alwaysApply: false`, globs 없음 (Apply Intelligently) |
+| 특정 파일 패턴에만 적용 | `globs` 패턴 지정 |
+| 사용자가 @멘션으로 수동 적용 | frontmatter에 description만 |
+
+형식 예시:
+
+```yaml
+---
+description: "이 룰이 하는 일과 적용 시점"
+alwaysApply: false
+globs:
+  - "src/components/**/*.tsx"
+---
+
+# 룰 제목
+
+구체적 지시사항...
+```
+
+주의:
+- Apply Intelligently 룰은 Skill로 마이그레이션을 고려 (공식 문서 권장)
+- 큰 룰은 여러 개의 조합 가능한 룰로 분리
+- 린터가 처리할 수 있는 스타일 가이드를 룰에 넣지 않음
+
+---
+
+## 2. Commands (.cursor/commands/**/*.md)
+
+파일 형식: 순수 마크다운 (frontmatter 없음)
+
+필수 체크:
+- [ ] YAML frontmatter가 없는가 (커맨드는 순수 마크다운)
+- [ ] 파일명이 설명적인가 (예: `review-code.md`, `create-pr.md`)
+- [ ] 워크플로우 단계가 명확한가
+- [ ] 기존 Skill과 중복되지 않는가 (중복 시 Skill 직접 호출 권장)
+
+형식 예시:
+
+```markdown
+# 커맨드 제목
+
+워크플로우 설명과 단계...
+
+1. 첫 번째 단계
+2. 두 번째 단계
+...
+```
+
+주의:
+- 단순히 Skill을 호출하는 브릿지 커맨드는 만들지 않음 (Skill을 직접 /이름으로 호출)
+- 커맨드는 자체적인 고유 워크플로우 로직이 있을 때만 생성
+
+---
+
+## 3. Skills (.cursor/skills/{name}/SKILL.md)
+
+파일 형식: YAML frontmatter + 마크다운, 반드시 `SKILL.md` 파일명
+
+필수 체크:
+- [ ] 파일명이 `SKILL.md`인가
+- [ ] 부모 폴더명과 frontmatter의 `name`이 일치하는가
+- [ ] `name` 필드가 소문자, 숫자, 하이픈만 사용하는가
+- [ ] `description`에 스킬의 용도와 사용 시점이 명시되어 있는가
+- [ ] 외부 도구 의존 시 `compatibility` 필드가 있는가
+- [ ] 자동 호출을 막으려면 `disable-model-invocation: true`가 설정되어 있는가
+
+폴더 구조:
+
+```
+.cursor/skills/{skill-name}/
+├── SKILL.md           # 필수
+├── scripts/           # 선택: 실행 가능한 코드
+├── references/        # 선택: 추가 문서
+└── assets/            # 선택: 정적 리소스
+```
+
+형식 예시:
+
+```yaml
+---
+name: my-skill
+description: 이 스킬이 하는 일과 사용 시점. Use when ...
+compatibility:
+  - tool: some-tool
+    check: command -v some-tool
+---
+
+# 스킬 제목
+
+## When to Use
+
+- 이 스킬은 ...할 때 사용
+
+## Workflow
+
+1. 단계 1
+2. 단계 2
+...
+```
+
+주의:
+- Skill은 Agent가 관련성 판단 시 자동 적용됨 (disable-model-invocation: true가 아닌 경우)
+- alwaysApply: true이거나 globs가 있는 룰은 Skill로 마이그레이션하지 않음
+
+---
+
+## 4. Agents (.cursor/agents/**/*.md)
+
+파일 형식: YAML frontmatter + 마크다운
+
+필수 체크:
+- [ ] `description`이 구체적이고 위임 시점이 명확한가
+- [ ] "일반적인 작업에 사용"과 같은 모호한 description이 아닌가
+- [ ] `model` 필드가 적절한가 (`fast`, `inherit`, 또는 특정 모델 ID)
+- [ ] `readonly`가 올바르게 설정되어 있는가 (분석/검토 전용이면 true)
+- [ ] 프롬프트가 간결한가 (2,000단어 이하 권장)
+- [ ] 빌트인 서브에이전트(explore, shell, browser)와 중복되지 않는가
+
+형식 예시:
+
+```yaml
+---
+name: agent-name
+description: 구체적 역할. Use when ... 또는 Use only when explicitly requested via /name.
+model: fast
+readonly: true
+is_background: false
+---
+
+You are a [role] expert.
+
+When invoked:
+1. ...
+2. ...
+```
+
+주의:
+- 서브에이전트는 2-3개로 시작, 명확한 용도가 있을 때만 추가
+- 단일 목적 작업은 Skill이나 Command가 더 적합
+- 빌트인 서브에이전트(explore, shell, browser)를 커스텀으로 재정의하지 않음
+
+---
+
+## 5. Hooks (.cursor/hooks.json, .cursor/hooks/**/*.sh)
+
+### hooks.json
+
+필수 체크:
+- [ ] `"version": 1`이 최상위에 있는가
+- [ ] hook event 이름이 유효한가 (sessionStart, preToolUse, postToolUse, afterFileEdit 등)
+- [ ] `matcher`가 필요한 이벤트에 적절히 설정되어 있는가
+- [ ] `type`이 미지정이면 기본값 `"command"`로 동작하는 것을 이해하는가
+
+형식 예시:
+
+```json
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      { "command": ".cursor/hooks/setup-check.sh" }
+    ],
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/guard-shell.sh",
+        "matcher": "Shell"
+      }
+    ]
+  }
+}
+```
+
+### Hook 스크립트 (.sh, .py)
+
+필수 체크:
+- [ ] stdin에서 JSON을 읽는가 (소비하지 않으면 파이프 블록 발생)
+- [ ] stdout으로 유효한 JSON을 출력하는가
+- [ ] exit code가 올바른가 (0: 성공, 2: 차단, 기타: fail-open)
+- [ ] 실행 권한(`chmod +x`)이 있는가
+- [ ] stderr는 디버그 로그에만 사용하는가 (의사결정에 영향 없음)
+
+출력 JSON 예시 (preToolUse):
+
+```json
+{"decision": "deny", "reason": "위험한 명령어 차단"}
+```
+
+출력 JSON 예시 (sessionStart):
+
+```json
+{"additional_context": "부트스트랩 메시지", "continue": true}
+```
+
+---
+
+## 자기 진화 프로토콜
+
+.cursor 구성이 스스로 발전하려면 다음 원칙을 따릅니다:
+
+1. 새로운 패턴 감지: 반복되는 작업 패턴이 발견되면 해당 워크플로우를 Skill이나 Command로 캡슐화
+2. 룰 분할: 500줄을 초과하는 룰은 여러 개의 조합 가능한 룰이나 Skill로 분리
+3. 중복 제거: 같은 지식이 여러 곳에 있으면 하나의 참조 소스로 통합하고 경로 참조
+4. 레퍼런스 갱신: Cursor 공식 문서가 변경되면 `.cursor/docs/cursor-official-reference.md`를 업데이트
+5. 적용 방식 최적화: Apply Intelligently 룰이 너무 많으면 Skill로 전환 검토
+6. Hook 확장: 반복적 검증 작업은 Hook으로 자동화
+
+진화 시 검증:
+- 기존 워크플로우가 깨지지 않는지 확인
+- 새로 추가된 파일이 이 룰의 체크리스트를 통과하는지 확인
+- synapse.mdc와의 일관성 유지

@@ -1,0 +1,126 @@
+---
+description: Phase별 에이전트 위임 규칙과 에이전트 생성 가이드. Subagent에 작업을 위임하거나 에이전트를 선택할 때 적용.
+alwaysApply: false
+source: origin
+---
+
+# Agent Delegation — 에이전트 위임 및 생성 가이드
+
+> 이 룰은 의도적으로 "Applied intelligently" 방식이며, 스킬로 마이그레이션하지 않습니다.
+
+Subagent에 작업을 위임할 때 자동 적용되는 가이드입니다.
+
+## 커스텀 에이전트 (프로젝트 컨벤션 적용)
+
+다음 에이전트는 `.cursor/agents/`에 정의되어 프로젝트 컨벤션과 context.mdc를 로드합니다:
+
+| 에이전트 | 역할 | Phase |
+|----------|------|-------|
+| analyst | 사전 분석, 요구사항 정제, 리스크 식별 | Phase 0 |
+| planner | 전략 기획, 영향도 분석 | Phase 1 |
+| critic | 계획 비판적 검토, Ralph Loop 통합 | Phase 1 |
+| implementer | Feature 구현, 프로젝트 패턴 준수 | Phase 2 |
+| reviewer | 코드 리뷰, 프로젝트 특화 체크리스트 | Phase 3 |
+| debugger | 디버깅, 메모리 릭, 성능 이슈 | Phase 2 |
+
+## Cursor 빌트인 subagent_type 활용
+
+Cursor가 제공하는 빌트인 subagent_type과 용도 매핑:
+
+| 작업 | subagent_type | 설명 |
+|------|---------------|------|
+| 코드 탐색, 구조 파악 | explore | 코드베이스 탐색, 파일 검색, 패턴 분석 |
+| 터미널 명령 실행 | shell | git, npm, 빌드 도구 등 CLI 작업 |
+| 브라우저 테스트 | browser-use | 웹 UI 테스트, 스크린샷, 폼 자동화 |
+| 범용 멀티스텝 작업 | generalPurpose | 복합 검색, 코드 조사, 멀티스텝 실행 |
+| 사전 분석 | analyst | 요구사항 정제, 스코프 분석 (비판적 관점) |
+| 계획 비판적 검토 | critic | 계획의 완전성, 의존성, 리스크 검증 |
+| 전략 기획 | planner | 구현 계획, 단계별 의존성, 리스크 평가 |
+| 코드 구현 | implementer | Feature 개발, 프로젝트 패턴 준수 |
+| 디버깅 | debugger | 버그 수정, 메모리 릭, 성능 이슈 |
+| 코드 리뷰 | reviewer | 코드 품질, 패턴 준수, 보안 검토 |
+
+빌트인 subagent에 프로젝트 컨텍스트를 전달하려면, Task tool의 prompt에 context.mdc의 핵심 정보를 포함합니다.
+
+주의: 커스텀 에이전트(analyst, planner, critic, implementer, reviewer, debugger)는 `.cursor/agents/`에 정의된 프로젝트 특화 버전이 우선 사용됩니다. 빌트인 subagent_type은 커스텀 에이전트가 없는 작업에 사용합니다.
+
+---
+
+## Phase별 위임 규칙
+
+### Phase 0: Analyze
+- 복잡한 Feature 요청 시: analyst에 위임
+- 심층 코드베이스 탐색 시: deep-search 스킬 적용
+
+### Phase 1: Plan
+- 전략 기획 요청 시: planner에 위임 → critic으로 계획 검증
+- 아키텍처 결정 필요 시: planner + critic 조합 또는 generalPurpose subagent
+- PRD 필요 시: prd 스킬 적용
+
+### Phase 2: Execute
+- Feature 구현 시: implementer에 위임
+- UI 구현 시: implementer (design-principles 스킬 적용)
+- 빌드 오류 시: debugger 또는 build-fix 스킬 적용
+- TDD 워크플로우 시: tdd 스킬 적용
+- 대규모 자율 작업 시: /autopilot 또는 /ralph 커맨드 적용
+- 구조적 리팩토링 시: ast-refactor 스킬 안내
+
+### Phase 3: Verify
+- 코드 리뷰 시: reviewer에 위임
+- 테스트 검증 시: reviewer + implementer 병렬 (테스트 코드 작성)
+- 보안 검토 시: reviewer (security-review 스킬 적용)
+- 문서화 시: implementer (documentation 스킬 적용)
+
+### Support (Phase 횡단)
+- 라이브러리/API 조사 시: explore subagent 또는 research 스킬
+- 코드베이스 탐색 시: explore subagent
+- 브라우저 테스트 시: browser-use subagent
+
+### Direct Handling
+- 단순한 작업이나 질문은 Subagent 없이 직접 처리
+
+---
+
+## 에이전트 생성 가이드라인
+
+### Emoji 선택 규칙
+
+| 도메인 | Emoji | 설명 |
+|--------|-------|------|
+| UI 구현 | 📱 | 화면, 컴포넌트, 레이아웃 작업 |
+| 아키텍처 설계/리팩토링 | 🏗️ | 구조 개선, 패턴 적용, 모듈화 |
+| 디버깅/문제 해결 | 🔍 | 버그 수정, 성능 개선 |
+| 마이그레이션/전환 | 🔄 | 언어 전환, 프레임워크 업그레이드 |
+| 테스트 작성 | 🧪 | 단위/통합 테스트, 품질 보증 |
+| 데이터 처리 | 💾 | 네트워크, 로컬 DB, 캐싱 |
+| 보안/인증 | 🔐 | 로그인, 암호화, 권한 관리 |
+| 성능 최적화 | ⚡ | 속도 개선, 메모리 최적화 |
+| 레거시 코드 분석 | 🔎 | 리버스 엔지니어링, 마이그레이션 로드맵 |
+| 디자인 구현 | 🎨 | Figma MCP를 활용한 UI 코드 생성 |
+
+### Synapse_CoR 변수 채우기
+
+- ${emoji}: 작업 도메인에 맞는 이모지 (위 테이블 참조)
+- ${role}: [구체적 도메인] 전문가
+- ${context}: 사용자 상황과 요구사항
+- ${goal}: 달성할 목표
+- ${tools}: context.mdc의 프레임워크 + 활성화된 스킬
+- ${reasoned steps}: todo-list를 사용한 단계별 실행 계획 (3~7단계)
+- ${completion}: 측정 가능한 완료 조건
+- ${first step, question}: 명확한 질문이나 다음 행동
+
+### 예시: 로그인 화면 구현
+
+📱: 저는 UI 설계 및 구현의 전문가입니다. 저는 사용자가 프로젝트에서 로그인 화면을 원한다는 것을 알고 있습니다. 보안적이고 사용자 친화적인 로그인 화면을 구현하기 위해 최선의 방법을 단계별로 결정하겠습니다.
+다음 단계를 통해 당신이 목표를 달성하도록 도울 것입니다:
+
+1. 프로젝트의 인증 관련 의존성 확인
+2. 기존 아키텍처 패턴 분석
+3. 로그인 View 및 ViewModel 구조 설계
+4. 입력 검증 로직 구현
+5. 접근성 및 반응형 대응
+6. 단위 테스트 작성
+
+제 임무는 로그인 화면이 동작하고 모든 테스트가 통과했을 때 종료됩니다.
+
+현재 프로젝트에 인증 관련 라이브러리나 기존 인증 로직이 있는지 확인해도 될까요?

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/setup-check.sh"
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/guard-shell.sh",
+        "matcher": "Shell"
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": ".cursor/hooks/usage-tracker.sh",
+        "matcher": "Read"
+      },
+      {
+        "command": ".cursor/hooks/todo-continuation.sh",
+        "matcher": "Write|StrReplace|Shell|EditNotebook"
+      },
+      {
+        "command": ".cursor/hooks/recovery.sh",
+        "matcher": "StrReplace|Write|EditNotebook|Shell"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/comment-checker.sh"
+      }
+    ]
+  }
+}

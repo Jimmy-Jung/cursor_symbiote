@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "kernelVersion": "1.0.0",
+  "created": "",
+  "lastEvolved": "",
+  "moltCount": 0,
+  "defaults": {
+    "completionLevel": 2,
+    "maxRalphIterations": 10,
+    "enableSecurityReview": false,
+    "enableQA": true
+  },
+  "project": {
+    "name": "",
+    "type": "",
+    "languages": [],
+    "platforms": []
+  },
+  "stack": {
+    "packageManager": "",
+    "buildTool": "",
+    "frameworks": [],
+    "libraries": [],
+    "architecture": "",
+    "testFramework": "",
+    "cicd": ""
+  },
+  "activated": {
+    "rules": [],
+    "skills": [],
+    "agentCustomizations": {}
+  },
+  "evolution": {
+    "history": []
+  }
+}
