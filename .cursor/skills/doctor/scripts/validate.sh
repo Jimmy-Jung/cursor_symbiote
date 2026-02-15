@@ -679,13 +679,13 @@ if [ "$EMPTY_FILES" -eq 0 ]; then
   echo "  [PASS] 빈 파일 없음"
 fi
 
-# 중복 이름 감지 (에이전트, 스킬, 커맨드 간 이름 충돌)
+# 중복 이름 감지 (에이전트, 스킬, 커맨드 간 정확한 이름 충돌)
 ALL_NAMES=""
 DUPLICATE_COUNT=0
 for agent_file in "$CURSOR_DIR"/agents/*.md; do
   [ -f "$agent_file" ] || continue
   name=$(basename "$agent_file" .md)
-  if echo "$ALL_NAMES" | grep -qw "$name"; then
+  if echo " $ALL_NAMES " | grep -qF " $name "; then
     DUPLICATE_COUNT=$((DUPLICATE_COUNT + 1))
     warn "이름 충돌: '$name'이 여러 카테고리에 존재합니다"
     echo "  [WARN] 이름 충돌: $name"
@@ -695,7 +695,7 @@ done
 for skill_dir in "$CURSOR_DIR"/skills/*/; do
   [ -d "$skill_dir" ] || continue
   name=$(basename "$skill_dir")
-  if echo "$ALL_NAMES" | grep -qw "$name"; then
+  if echo " $ALL_NAMES " | grep -qF " $name "; then
     DUPLICATE_COUNT=$((DUPLICATE_COUNT + 1))
     warn "이름 충돌: '$name'이 여러 카테고리에 존재합니다"
     echo "  [WARN] 이름 충돌: $name"
@@ -705,7 +705,7 @@ done
 for cmd_file in "$CURSOR_DIR"/commands/*.md; do
   [ -f "$cmd_file" ] || continue
   name=$(basename "$cmd_file" .md)
-  if echo "$ALL_NAMES" | grep -qw "$name"; then
+  if echo " $ALL_NAMES " | grep -qF " $name "; then
     DUPLICATE_COUNT=$((DUPLICATE_COUNT + 1))
     warn "이름 충돌: '$name'이 여러 카테고리에 존재합니다"
     echo "  [WARN] 이름 충돌: $name"
