@@ -19,13 +19,36 @@ json_field() {
   fi
 }
 
+# JSON nested field extractor for tool_input.path (jq with fallback)
+json_nested_field() {
+  local json="$1" parent="$2" field="$3"
+  if command -v jq >/dev/null 2>&1; then
+    printf '%s' "$json" | jq -r ".$parent.$field // empty" 2>/dev/null
+  else
+    # Fallback: extract parent object then find field within it
+    local parent_val
+    parent_val=$(printf '%s' "$json" | grep -o "\"$parent\"[[:space:]]*:[[:space:]]*{[^}]*}" | head -1)
+    if [ -n "$parent_val" ]; then
+      printf '%s' "$parent_val" | grep -o "\"$field\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" | head -1 | sed "s/\"$field\"[[:space:]]*:[[:space:]]*\"//" | sed 's/"$//'
+    fi
+  fi
+}
+
 # Read JSON input from stdin (required by hook protocol)
 INPUT=$(cat)
 
-# Extract file path from Read tool input
-FILE_PATH=$(json_field "$INPUT" "path")
+# Extract file path from postToolUse input (tool_input.path)
+FILE_PATH=$(json_nested_field "$INPUT" "tool_input" "path")
 
-# Fallback: try "file_path" field
+# Fallback: try top-level "path" field
+if [ -z "$FILE_PATH" ]; then
+  FILE_PATH=$(json_field "$INPUT" "path")
+fi
+
+# Fallback: try "file_path" field (top-level or nested)
+if [ -z "$FILE_PATH" ]; then
+  FILE_PATH=$(json_nested_field "$INPUT" "tool_input" "file_path")
+fi
 if [ -z "$FILE_PATH" ]; then
   FILE_PATH=$(json_field "$INPUT" "file_path")
 fi
