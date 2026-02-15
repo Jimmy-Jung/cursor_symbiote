@@ -41,13 +41,13 @@ esac
 COMMENT_COUNT=0
 
 # Pattern 1: Obvious/self-documenting comments (e.g., "// Initialize variable")
-P1=$(grep -cE '^\s*(//|#|/\*)\s*(Initialize|Set|Get|Return|Create|Update|Delete|Check|Handle|Process)\s' "$FILE_PATH" 2>/dev/null || echo 0)
+P1=$(grep -cE '^\s*(//|#|/\*)\s*(Initialize|Set|Get|Return|Create|Update|Delete|Check|Handle|Process)\s' "$FILE_PATH" 2>/dev/null) || P1=0
 
 # Pattern 2: Commented-out code blocks (language-agnostic keywords)
-P2=$(grep -cE '^\s*(//|#)\s*(if |for |while |function |def |class |return |import |from |require |include |export |const |var |let )' "$FILE_PATH" 2>/dev/null || echo 0)
+P2=$(grep -cE '^\s*(//|#)\s*(if |for |while |function |def |class |return |import |from |require |include |export |const |var |let )' "$FILE_PATH" 2>/dev/null) || P2=0
 
 # Pattern 3: TODO/FIXME/HACK without context
-P3=$(grep -cE '^\s*(//|#)\s*(TODO|FIXME|HACK|XXX)\s*$' "$FILE_PATH" 2>/dev/null || echo 0)
+P3=$(grep -cE '^\s*(//|#)\s*(TODO|FIXME|HACK|XXX)\s*$' "$FILE_PATH" 2>/dev/null) || P3=0
 
 COMMENT_COUNT=$((P1 + P2 + P3))
 
