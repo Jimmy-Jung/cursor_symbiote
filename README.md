@@ -531,7 +531,7 @@ Git의 pre-commit/post-commit 훅과 개념이 비슷합니다.
 
 ```json
 {"version":1,"hooks":{"preToolUse":[{"command":".cursor/hooks/my-guard.sh","matcher":"Shell"}]}}
-
+```
 ---
 
 ## Usage Tracking — 사용 추적
