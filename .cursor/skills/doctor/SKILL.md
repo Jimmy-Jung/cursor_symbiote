@@ -46,8 +46,8 @@ source: origin
 
 ### 7. 사용 추적 시스템 (Usage Tracking)
 - [ ] usage-tracker.sh 훅 파일 존재 및 실행 권한
-- [ ] hooks.json에 usage-tracker.sh가 Read matcher로 등록되어 있는가
-- [ ] usage-data 디렉터리 구조 (skills, commands, agents 하위 디렉터리)
+- [ ] hooks.json에 usage-tracker.sh가 postToolUse(Read)와 subagentStart로 등록되어 있는가
+- [ ] usage-data 디렉터리 구조 (skills, commands, agents, subagents, system-skills 하위 디렉터리)
 - [ ] .tracked-since 파일 존재 (추적 활성 상태인지)
 - [ ] 고아 데이터 감지 (삭제된 스킬/커맨드/에이전트의 카운터가 남아있는지)
 - [ ] 데이터 파일 형식 유효성 ({count}|{timestamp})

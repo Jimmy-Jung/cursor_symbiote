@@ -14,7 +14,7 @@ cursor_symbiote는 Cursor IDE의 AI Agent를 전문가 팀처럼 운영하기 �
 - 자율 완료: Ralph Loop / Autopilot으로 사용자 개입 없이 Plan→Execute→Verify 반복
 - 자기 진화: `/setup` → `/evolve` → `/doctor` → `/stats` 생명주기로 프로젝트와 함께 성장
 - 안전장치 내장: 위험 명령 차단, 불필요 주석 감지, 에러 복구가 자동 실행
-- 사용 추적: 스킬/커맨드/에이전트 사용 빈도를 자동 추적하여 최적화 의사결정 지원
+- 사용 추적: 스킬/커맨드/에이전트/서브에이전트/시스템 스킬 사용 빈도를 자동 추적하여 최적화 의사결정 지원
 
 ## 기술 스택
 
@@ -89,7 +89,7 @@ Agent에 전문 기능을 확장하는 지식 패키지입니다. Core 4개(code
 |----|--------|------|
 | setup-check.sh | sessionStart | manifest.json 확인, 중단된 Ralph Loop 감지 |
 | guard-shell.sh | preToolUse | 위험 명령어 차단 |
-| usage-tracker.sh | postToolUse | 사용 빈도 자동 추적 |
+| usage-tracker.sh | postToolUse, subagentStart | 사용 빈도 자동 추적 |
 | todo-continuation.sh | postToolUse | Ralph Loop 시 TODO 완료 강제 |
 | recovery.sh | postToolUse | 편집/쉘 오류 복구 가이드 |
 | comment-checker.sh | afterFileEdit | AI 불필요 주석 감지 |

@@ -133,7 +133,9 @@
     │   ├── .tracked-since          # 추적 시작일
     │   ├── skills/{name}           # 스킬별 카운터
     │   ├── commands/{name}         # 커맨드별 카운터
-    │   └── agents/{name}           # 에이전트별 카운터
+    │   ├── agents/{name}           # 에이전트별 카운터
+    │   ├── subagents/{name}        # 빌트인 서브에이전트별 카운터
+    │   └── system-skills/{name}    # 시스템 스킬별 카운터
     └── state/                      # 런타임 상태
         └── {ISO8601}_{task-name}/  # 작업별 격리 폴더
             ├── ralph-state.md      # 루프 제어 메타데이터
@@ -170,7 +172,7 @@ YAML frontmatter에 `name`, `description`, `model`, `readonly` 필드가 있습�
 
 ### `hooks/`
 
-`hooks.json`에 이벤트(sessionStart, preToolUse, postToolUse, afterFileEdit)와 스크립트를 등록합니다. 스크립트는 stdin JSON → stdout JSON 프로토콜을 따릅니다.
+`hooks.json`에 이벤트(sessionStart, preToolUse, postToolUse, subagentStart, afterFileEdit)와 스크립트를 등록합니다. 스크립트는 stdin JSON → stdout JSON 프로토콜을 따릅니다.
 
 ### `project/state/`
 

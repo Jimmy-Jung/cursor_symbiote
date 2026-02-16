@@ -19,6 +19,7 @@ source: origin
 
 - `.cursor/hooks/*.sh` 파일에 실행 권한 부여: `chmod +x .cursor/hooks/*.sh`
 - `.cursor/project/usage-data/` 내부 기존 데이터 초기화 (씨앗에서 이전 프로젝트 데이터가 남아있을 수 있음)
+- `.cursor/project/usage-data/`에 5개 카테고리 디렉터리 생성: skills, commands, agents, subagents, system-skills
 - `.cursor/project/usage-data/.tracked-since`에 현재 ISO8601 타임스탬프 기록
 
 ### Step 1: 프로젝트 감지 (Project Detection)

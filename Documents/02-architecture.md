@@ -89,6 +89,7 @@ flowchart TB
 
 도구 사용 전 ──→ preToolUse Hook 실행 (guard-shell.sh)
 도구 사용 후 ──→ postToolUse Hook 실행 (usage-tracker.sh 등)
+서브에이전트 시작 ──→ subagentStart Hook 실행 (usage-tracker.sh)
 파일 편집 후 ──→ afterFileEdit Hook 실행 (comment-checker.sh)
 ```
 

@@ -2,7 +2,7 @@
 
 # Stats — 사용 통계 조회
 
-스킬, 커맨드, 에이전트의 사용 빈도를 분석하여 미사용 항목 제거 및 개선 판단을 지원합니다.
+스킬, 커맨드, 에이전트, 빌트인 서브에이전트, 시스템 스킬의 사용 빈도를 분석하여 미사용 항목 제거 및 개선 판단을 지원합니다.
 
 ## 워크플로우
 
@@ -14,10 +14,12 @@
 
 ```
 .cursor/project/usage-data/
-  .tracked-since     # 추적 시작일
-  skills/{name}      # 스킬별 카운터
-  commands/{name}    # 커맨드별 카운터
-  agents/{name}      # 에이전트별 카운터
+  .tracked-since          # 추적 시작일
+  skills/{name}           # 스킬별 카운터
+  commands/{name}         # 커맨드별 카운터
+  agents/{name}           # 에이전트별 카운터
+  subagents/{name}        # 빌트인 서브에이전트별 카운터
+  system-skills/{name}    # 시스템 스킬별 카운터
 ```
 
 추적 데이터가 없으면 "`usage-tracker` 훅이 아직 데이터를 수집하지 않았습니다. 세션을 사용하면 자동으로 수집됩니다." 안내.
@@ -30,6 +32,8 @@
 - 커맨드: `.cursor/commands/*.md` — Glob으로 검색, 파일명(확장자 제외) 추출
   - `stats.md` 자체는 목록에서 제외
 - 에이전트: `.cursor/agents/*.md` — Glob으로 검색, 파일명(확장자 제외) 추출
+- 서브에이전트: `usage-data/subagents/` — 추적된 타입 목록 (subagentStart hook으로 수집)
+- 시스템 스킬: `usage-data/system-skills/` — 추적된 시스템 스킬 목록
 
 ### Step 3: 데이터 병합 및 정렬
 

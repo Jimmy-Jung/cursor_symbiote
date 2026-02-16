@@ -42,7 +42,7 @@ manifest.json이 없거나 source 필드가 없는 항목은 레이블 없이 �
 
 `.cursor/project/usage-data/` 디렉터리가 존재하면 사용 통계를 함께 표시합니다.
 
-각 카테고리(skills, commands, agents) 하위 파일을 읽어 count를 추출합니다.
+각 카테고리(skills, commands, agents, subagents, system-skills) 하위 파일을 읽어 count를 추출합니다.
 파일 형식: `{count}|{ISO8601 timestamp}`
 
 통계가 있으면:

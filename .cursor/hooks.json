@@ -26,6 +26,11 @@
         "matcher": "StrReplace|Write|EditNotebook|Shell"
       }
     ],
+    "subagentStart": [
+      {
+        "command": ".cursor/hooks/usage-tracker.sh"
+      }
+    ],
     "afterFileEdit": [
       {
         "command": ".cursor/hooks/comment-checker.sh"

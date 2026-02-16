@@ -121,7 +121,7 @@ git-commit ←── 커밋 시점에 참조
 |----|-------------|------|
 | setup-check | Synapse | 세션 시작 시 부트스트랩 메시지 주입 |
 | guard-shell | 모든 Shell 사용 에이전트 | 위험 명령 차단 |
-| usage-tracker | 모든 Read 사용 에이전트 | 사용 빈도 자동 추적 |
+| usage-tracker | 모든 Read 사용 에이전트, 서브에이전트 | 사용 빈도 자동 추적 (postToolUse + subagentStart) |
 | todo-continuation | implementer, debugger | Ralph 활성 시 TODO 리마인드 |
 | recovery | implementer, debugger | 에러 복구 가이드 제공 |
 | comment-checker | implementer | 불필요 주석 경고 |

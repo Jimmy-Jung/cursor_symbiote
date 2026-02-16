@@ -194,7 +194,7 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
 ├── hooks/                          # 훅 스크립트 (6개)
 │   ├── setup-check.sh              # 세션 시작 시 부트스트랩 확인
 │   ├── guard-shell.sh              # 위험한 쉘 명령어 차단
-│   ├── usage-tracker.sh            # 스킬/커맨드/에이전트 사용 빈도 추적
+│   ├── usage-tracker.sh            # 사용 빈도 추적 (스킬/커맨드/에이전트/서브에이전트/시스템 스킬)
 │   ├── todo-continuation.sh        # TODO 완료 강제 (Ralph Loop 시)
 │   ├── recovery.sh                 # 편집 오류/세션 복구
 │   └── comment-checker.sh          # AI 불필요 주석 감지
@@ -211,6 +211,7 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
 │   │   ├── guard-shell.bats
 │   │   ├── recovery.bats
 │   │   ├── todo-continuation.bats
+│   │   ├── usage-tracker.bats
 │   │   └── comment-checker.bats
 │   └── fixtures/                   # 테스트 데이터
 │       ├── ralph-state-active.md
@@ -225,7 +226,9 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
     │   ├── .tracked-since          # 추적 시작일
     │   ├── skills/{name}           # 스킬별 카운터 ({count}|{timestamp})
     │   ├── commands/{name}         # 커맨드별 카운터
-    │   └── agents/{name}           # 에이전트별 카운터
+    │   ├── agents/{name}           # 에이전트별 카운터
+    │   ├── subagents/{name}        # 빌트인 서브에이전트별 카운터
+    │   └── system-skills/{name}    # 시스템 스킬별 카운터
     └── state/                      # 런타임 상태
         └── {ISO8601}_{task-name}/  # 작업별 격리 폴더
             ├── ralph-state.md      # 루프 제어 메타데이터
@@ -273,7 +276,8 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
 ┌──────────────────────────────────────┐
 │  Hooks (도구 사용 전후)               │  ← 자동화된 안전장치 및 관리
 │  - preToolUse: guard-shell.sh        │  ← 위험 명령어 차단
-│  - postToolUse: usage-tracker.sh     │  ← 스킬/커맨드/에이전트 사용 추적
+│  - postToolUse: usage-tracker.sh     │  ← 스킬/커맨드/에이전트/시스템 스킬 추적
+│  - subagentStart: usage-tracker.sh   │  ← 빌트인 서브에이전트 추적
 │  - postToolUse: todo-continuation.sh │  ← TODO 완료 강제
 │  - postToolUse: recovery.sh          │  ← 오류 복구
 │  - afterFileEdit: comment-checker.sh │  ← 불필요 주석 감지
@@ -307,6 +311,7 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
 
 도구 사용 전 ──→ preToolUse Hook 실행 (guard-shell.sh)
 도구 사용 후 ──→ postToolUse Hook 실행 (usage-tracker.sh, todo-continuation.sh, recovery.sh)
+서브에이전트 시작 ──→ subagentStart Hook 실행 (usage-tracker.sh)
 파일 편집 후 ──→ afterFileEdit Hook 실행 (comment-checker.sh)
 ```
 
@@ -533,13 +538,14 @@ Git의 pre-commit/post-commit 훅과 개념이 비슷합니다.
 
 설정 파일은 `hooks.json`, 스크립트는 `hooks/` 폴더에 위치합니다.
 
-### 4가지 이벤트 타이밍
+### 5가지 이벤트 타이밍
 
 | 이벤트 | 실행 시점 | 용도 | 출력 형식 |
 |--------|-----------|------|-----------|
 | `sessionStart` | 세션(대화) 시작 시 | 환경 초기화, 상태 확인 | `{"additional_context":"...","continue":true}` |
 | `preToolUse` | 도구 실행 직전 | 위험한 명령 차단 (approve/deny) | `{"decision":"approve"}` 또는 `{"decision":"deny","reason":"..."}` |
 | `postToolUse` | 도구 실행 직후 | 에러 감지, 추가 안내 주입 | `{"additional_context":"..."}` 또는 `{}` |
+| `subagentStart` | 서브에이전트 시작 시 | 서브에이전트 사용 추적 | `{}` |
 | `afterFileEdit` | 파일 편집 완료 후 | 코드 품질 검사 | `{"additional_context":"..."}` 또는 `{}` |
 
 `matcher` 필드로 특정 도구에만 훅을 적용할 수 있습니다 (예: `"matcher": "Shell"`).
@@ -550,9 +556,10 @@ Git의 pre-commit/post-commit 훅과 개념이 비슷합니다.
 |--------|----------|---------|------|
 | `sessionStart` | `setup-check.sh` | — | 세션 시작 시 manifest.json 존재 확인, 중단된 Ralph Loop 감지 |
 | `preToolUse` | `guard-shell.sh` | Shell | 위험한 쉘 명령어 차단 |
-| `postToolUse` | `usage-tracker.sh` | Read | 스킬/커맨드/에이전트 파일 읽기 시 사용 빈도 자동 추적 |
+| `postToolUse` | `usage-tracker.sh` | Read | 스킬/커맨드/에이전트/시스템 스킬 파일 읽기 시 사용 빈도 자동 추적 |
 | `postToolUse` | `todo-continuation.sh` | Write, StrReplace, Shell, EditNotebook | Ralph Loop 활성 시 TODO 완료 강제 리마인드 |
 | `postToolUse` | `recovery.sh` | StrReplace, Write, EditNotebook, Shell | 편집/쉘 오류 발생 시 복구 가이드 제공 |
+| `subagentStart` | `usage-tracker.sh` | — | 빌트인 서브에이전트 시작 시 사용 빈도 자동 추적 |
 | `afterFileEdit` | `comment-checker.sh` | — | AI 생성 불필요 주석 패턴 감지 및 경고 |
 
 ### 통신 프로토콜
@@ -571,8 +578,17 @@ Git의 pre-commit/post-commit 훅과 개념이 비슷합니다.
 
 ## Usage Tracking — 사용 추적
 
-`usage-tracker.sh` 훅이 스킬/커맨드/에이전트 파일 읽기를 자동 추적합니다. 데이터는 `usage-data/{category}/{name}` 파일에 `{횟수}|{ISO8601}` 형식으로 저장됩니다.
+`usage-tracker.sh` 훅이 5개 카테고리의 사용 빈도를 자동 추적합니다:
 
+| 카테고리 | 추적 방식 | 설명 |
+|----------|----------|------|
+| skills | postToolUse(Read) + CLI | 프로젝트 스킬 |
+| commands | postToolUse(Read) + CLI | 슬래시 커맨드 |
+| agents | postToolUse(Read) + CLI | 커스텀 에이전트 |
+| subagents | subagentStart hook + CLI | 빌트인 서브에이전트 (explore, shell 등) |
+| system-skills | postToolUse(Read) + CLI | 시스템 스킬 (~/.cursor/skills-cursor/) |
+
+데이터는 `usage-data/{category}/{name}` 파일에 `{횟수}|{ISO8601}` 형식으로 저장됩니다.
 `/stats`로 사용 빈도 순위, 미사용 항목, 제거 추천을 확인할 수 있습니다. `/stats --reset`으로 카운터를 초기화합니다.
 
 ---
@@ -594,16 +610,17 @@ brew install bats-core jq
 
 | Layer | 유형 | 자동화 | 설명 |
 |-------|------|--------|------|
-| Layer 1 | 훅 스크립트 단위 테스트 | 자동 (bats) | 5개 훅의 입출력을 60개 케이스로 검증 |
+| Layer 1 | 훅 스크립트 단위 테스트 | 자동 (bats) | 6개 훅의 입출력을 122개 케이스로 검증 |
 | Layer 2 | 구조 검증 스크립트 | 자동 (validate.sh) | frontmatter, 경로 참조, 스키마 유효성 검사 |
 | Layer 3 | 시나리오 체크리스트 | 수동 | 에이전트/스킬 행동 24개 시나리오 수동 확인 |
 
-### Layer 1: 훅 스크립트 단위 테스트 (60 tests)
+### Layer 1: 훅 스크립트 단위 테스트 (122 tests)
 
 | 훅 | 테스트 수 | 검증 내용 |
 |----|-----------|-----------|
 | setup-check.sh | 6 | manifest.json/ralph-state.md 상태별 출력 |
 | guard-shell.sh | 23 | 위험 명령 차단, 안전 명령 허용, 엣지 케이스 |
+| usage-tracker.sh | 62 | CLI/Hook/SubAgent 모드, 5개 카테고리, 검증, 크로스 모드 |
 | recovery.sh | 10 | 도구별 에러 복구 메시지, 비매칭 도구 무시 |
 | todo-continuation.sh | 10 | Ralph Loop 활성 시 TODO 연속 알림 |
 | comment-checker.sh | 11 | 파일 타입 필터링, 주석 패턴 탐지 |

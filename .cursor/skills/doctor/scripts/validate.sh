@@ -572,7 +572,7 @@ if [ -f "$SYNAPSE_FILE" ]; then
   done
 
   # synapse.mdc에서 알려진 스킬 참조 확인
-  KNOWN_SKILL_REFS="code-accuracy planning clean-functions code-review design-principles tdd documentation mermaid refactoring reverse-engineering git-commit branch-convention merge-request autonomous-loop deep-search deep-index research ecomode prd ralplan build-fix cancel help verify-loop ast-refactor"
+  KNOWN_SKILL_REFS="code-accuracy planning clean-functions code-review design-principles tdd documentation mermaid refactoring reverse-engineering git-commit branch-convention merge-request autonomous-loop deep-search deep-index research ecomode prd ralplan build-fix cancel help verify-loop ast-refactor solid"
   for skill in $KNOWN_SKILL_REFS; do
     if echo "$EXISTING_SKILLS" | grep -qw "$skill"; then
       pass

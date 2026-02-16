@@ -69,6 +69,8 @@ sequenceDiagram
 | `usage-data/skills/{name}` | 스킬 사용 횟수 | 스킬 파일 Read 시 (자동) |
 | `usage-data/commands/{name}` | 커맨드 사용 횟수 | 커맨드 파일 Read 시 (자동) |
 | `usage-data/agents/{name}` | 에이전트 사용 횟수 | 에이전트 파일 Read 시 (자동) |
+| `usage-data/subagents/{name}` | 빌트인 서브에이전트 횟수 | 서브에이전트 시작 시 (자동) |
+| `usage-data/system-skills/{name}` | 시스템 스킬 횟수 | 시스템 스킬 Read 시 (자동) |
 | `usage-data/.tracked-since` | 추적 시작일 | `/setup`, `/stats --reset` |
 
 ## 에이전트 간 통신
@@ -123,7 +125,7 @@ flowchart LR
     D -->|No| APPROVE["approve"]
 ```
 
-### postToolUse Hook
+### postToolUse Hook + subagentStart Hook
 
 ```mermaid
 flowchart LR
@@ -131,6 +133,9 @@ flowchart LR
     UT --> P{.cursor/ 파일?}
     P -->|Yes| COUNT["카운터 증가"]
     P -->|No| SKIP["무시"]
+    
+    SUBAGENT["서브에이전트 시작"] --> UT2["usage-tracker.sh"]
+    UT2 --> SA["subagents/ 카운터 증가"]
     
     WRITE["Write 도구 완료"] --> TC["todo-continuation.sh"]
     TC --> R{Ralph active?}

@@ -121,7 +121,7 @@ setup이 `.cursor.back`을 자동 감지하여:
 
 | Layer | 유형 | 자동화 | 설명 |
 |-------|------|--------|------|
-| Layer 1 | 훅 단위 테스트 | 자동 (bats) | 60개 케이스로 5개 훅 검증 |
+| Layer 1 | 훅 단위 테스트 | 자동 (bats) | 122개 케이스로 6개 훅 검증 |
 | Layer 2 | 구조 검증 | 자동 (validate.sh) | frontmatter, 경로, 스키마 검사 |
 | Layer 3 | 시나리오 체크리스트 | 수동 | 24개 시나리오 수동 확인 |
 
@@ -141,6 +141,7 @@ bats .cursor/tests/hooks/setup-check.bats
 bats .cursor/tests/hooks/recovery.bats
 bats .cursor/tests/hooks/todo-continuation.bats
 bats .cursor/tests/hooks/comment-checker.bats
+bats .cursor/tests/hooks/usage-tracker.bats
 ```
 
 구조 검증만 (Layer 2):
@@ -157,6 +158,7 @@ bash .cursor/skills/doctor/scripts/validate.sh
 |----|-----------|-----------|
 | setup-check.sh | 6 | manifest.json/ralph-state.md 상태별 출력 |
 | guard-shell.sh | 23 | 위험 명령 차단, 안전 명령 허용, 엣지 케이스 |
+| usage-tracker.sh | 62 | CLI/Hook/SubAgent 모드, 5개 카테고리, 검증, 크로스 모드 |
 | recovery.sh | 10 | 도구별 에러 복구 메시지, 비매칭 도구 무시 |
 | todo-continuation.sh | 10 | Ralph Loop 활성 시 TODO 연속 알림 |
 | comment-checker.sh | 11 | 파일 타입 필터링, 주석 패턴 탐지 |

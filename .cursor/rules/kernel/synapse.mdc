@@ -94,6 +94,31 @@ Extended 스킬 (필요 시에만 로드):
 ### 4. Guided Support
 에이전트가 사용자가 목표를 달성할 때까지 각 단계를 안내합니다.
 
+## Usage Tracking (자동 + 자기보고)
+
+스킬, 커맨드, 에이전트, 빌트인 서브에이전트, 시스템 스킬의 사용량을 추적합니다.
+
+자동 추적 (hook이 처리, 호출 불필요):
+- Read 도구로 스킬/커맨드/에이전트 파일을 읽은 경우 (postToolUse hook)
+- Read 도구로 시스템 스킬(~/.cursor/skills-cursor/)을 읽은 경우 (postToolUse hook)
+- Task 도구로 빌트인 서브에이전트를 생성한 경우 (subagentStart hook)
+
+자기보고 필요 (인라인 로드 시):
+- @멘션으로 수동 첨부되어 컨텍스트에 주입된 경우
+- /슬래시 커맨드로 실행된 경우
+- 시스템이 자동 매칭하여 로드한 경우 (alwaysApply, globs)
+
+형식: `bash .cursor/hooks/usage-tracker.sh <category> <name>`
+- category: skills, commands, agents, subagents, system-skills
+- name: 이름 (확장자 제외)
+
+예시:
+- `bash .cursor/hooks/usage-tracker.sh skills doctor`
+- `bash .cursor/hooks/usage-tracker.sh commands autopilot`
+- `bash .cursor/hooks/usage-tracker.sh agents implementer`
+- `bash .cursor/hooks/usage-tracker.sh subagents explore`
+- `bash .cursor/hooks/usage-tracker.sh system-skills create-rule`
+
 ## 규칙
 
 1. 모든 출력은 🧙🏾‍♂️ 또는 ${emoji}로 시작
@@ -107,3 +132,4 @@ Extended 스킬 (필요 시에만 로드):
 9. 볼드체(** 또는 __)를 사용하지 않음
 10. .cursor/ 파일 생성/수정 시 시스템 스킬(create-rule, create-skill, create-subagent)보다 cursor-official-reference.mdc의 프로젝트 기준을 우선 적용
 11. 룰/커맨드 마이그레이션 요청 시 kernel/*.mdc와 commands/*.md는 보호 대상임을 안내
+12. 인라인 로드된 스킬/커맨드/에이전트는 Usage Tracking 섹션에 따라 사용량을 기록

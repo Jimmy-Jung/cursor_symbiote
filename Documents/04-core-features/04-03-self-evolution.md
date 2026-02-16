@@ -114,8 +114,10 @@ flowchart LR
 
 `usage-tracker.sh` 훅이 자동으로 추적합니다:
 - 파일 위치: `.cursor/project/usage-data/{category}/{name}`
+- 카테고리: skills, commands, agents, subagents, system-skills
 - 형식: `{횟수}|{ISO8601}`
 - 추적 시작일: `.tracked-since`
+- 추적 소스: postToolUse(Read) hook, subagentStart hook, CLI 자기보고
 
 ### 분석 결과
 

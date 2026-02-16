@@ -6,13 +6,14 @@
 
 Hooks는 에이전트의 특정 동작 시점에 자동으로 실행되는 셸 스크립트입니다. Git의 pre-commit/post-commit 훅과 비슷한 개념으로, 에이전트가 도구를 사용하거나 파일을 편집할 때 끼어들어 검증, 차단, 추가 컨텍스트 주입을 수행합니다.
 
-## 4가지 이벤트 타이밍
+## 5가지 이벤트 타이밍
 
 | 이벤트 | 실행 시점 | 용도 | 출력 |
 |--------|-----------|------|------|
 | `sessionStart` | 세션(대화) 시작 시 | 환경 초기화, 상태 확인 | `{"additional_context":"...","continue":true}` |
 | `preToolUse` | 도구 실행 직전 | 위험 명령 차단 | `{"decision":"approve"}` 또는 `{"decision":"deny","reason":"..."}` |
 | `postToolUse` | 도구 실행 직후 | 에러 감지, 추가 안내 | `{"additional_context":"..."}` 또는 `{}` |
+| `subagentStart` | 서브에이전트 시작 시 | 사용 빈도 추적 | `{}` |
 | `afterFileEdit` | 파일 편집 완료 후 | 코드 품질 검사 | `{"additional_context":"..."}` 또는 `{}` |
 
 ## 통신 프로토콜
@@ -61,19 +62,30 @@ stdin (JSON 입력) → 스크립트 실행 → stdout (JSON 출력)
 {"decision":"deny","reason":"위험한 명령어: git push --force"}
 ```
 
-### 3. usage-tracker.sh (postToolUse, matcher: Read)
+### 3. usage-tracker.sh (postToolUse + subagentStart)
 
-스킬/커맨드/에이전트 파일 읽기 시 사용 빈도를 자동 추적합니다.
+스킬/커맨드/에이전트/서브에이전트/시스템 스킬의 사용 빈도를 자동 추적합니다. 3가지 모드로 동작합니다:
 
-동작:
+postToolUse(Read) 모드:
 1. Read 도구로 읽은 파일 경로를 확인
-2. `.cursor/skills/`, `.cursor/commands/`, `.cursor/agents/` 경로 매칭
+2. `.cursor/skills/`, `.cursor/commands/`, `.cursor/agents/`, `~/.cursor/skills-cursor/` 경로 매칭
 3. 매칭되면 `usage-data/{category}/{name}` 파일의 카운터 증가
+
+subagentStart 모드:
+1. 빌트인 서브에이전트(explore, shell, browser-use 등) 시작 시 자동 호출
+2. JSON에서 서브에이전트 타입 추출
+3. `usage-data/subagents/{type}` 카운터 증가
+
+CLI 자기보고 모드:
+1. 에이전트가 `bash .cursor/hooks/usage-tracker.sh <category> <name>`으로 직접 호출
+2. @멘션, /슬래시 커맨드, 자동 매칭으로 인라인 로드된 항목을 추적
 
 데이터 형식:
 ```
 {횟수}|{ISO8601-타임스탬프}
 ```
+
+카테고리: skills, commands, agents, subagents, system-skills
 
 ### 4. todo-continuation.sh (postToolUse, matcher: Write|StrReplace|Shell|EditNotebook)
 
@@ -133,6 +145,9 @@ Ralph Loop가 활성화된 상태에서 TODO 완료를 강제합니다.
         "matcher": "StrReplace|Write|EditNotebook|Shell"
       }
     ],
+    "subagentStart": [
+      { "command": ".cursor/hooks/usage-tracker.sh" }
+    ],
     "afterFileEdit": [
       { "command": ".cursor/hooks/comment-checker.sh" }
     ]
@@ -144,12 +159,13 @@ Ralph Loop가 활성화된 상태에서 TODO 완료를 강제합니다.
 
 ## 테스트
 
-각 훅에 대해 bats-core 단위 테스트가 작성되어 있습니다 (총 60 tests):
+각 훅에 대해 bats-core 단위 테스트가 작성되어 있습니다 (총 122 tests):
 
 | 훅 | 테스트 수 | 파일 |
 |----|-----------|------|
 | setup-check.sh | 6 | `tests/hooks/setup-check.bats` |
 | guard-shell.sh | 23 | `tests/hooks/guard-shell.bats` |
+| usage-tracker.sh | 62 | `tests/hooks/usage-tracker.bats` |
 | recovery.sh | 10 | `tests/hooks/recovery.bats` |
 | todo-continuation.sh | 10 | `tests/hooks/todo-continuation.bats` |
 | comment-checker.sh | 11 | `tests/hooks/comment-checker.bats` |
