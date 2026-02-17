@@ -9,6 +9,8 @@ source: origin
 
 # Git Commit
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills git-commit`
+
 프로젝트 커밋 컨벤션에 맞는 커밋 메시지를 자동 생성합니다.
 
 ## 참조 룰

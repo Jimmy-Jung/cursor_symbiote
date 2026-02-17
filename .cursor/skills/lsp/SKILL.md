@@ -6,6 +6,8 @@ source: origin
 
 # LSP — Language Server Protocol 통합 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills lsp`
+
 Cursor IDE의 내장 LSP 기능을 에이전트가 최대한 활용하도록 안내합니다.
 
 ## 현재 Cursor에서의 LSP 접근

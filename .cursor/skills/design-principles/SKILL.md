@@ -6,6 +6,8 @@ source: origin
 
 # 설계 원칙 (OOP + SOLID)
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills design-principles`
+
 객체지향 설계와 SOLID 원칙을 통합한 가이드. 언어/플랫폼에 무관하게 적용 가능하다.
 
 ## 객체지향 핵심 원칙

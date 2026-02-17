@@ -7,6 +7,8 @@ source: origin
 
 # Ecomode — 토큰 효율적 실행
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills ecomode`
+
 비용을 최소화하면서 품질을 유지하는 실행 모드입니다.
 
 ## 진입 조건

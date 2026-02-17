@@ -2,6 +2,8 @@
 
 # Pipeline
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands pipeline`
+
 에이전트를 순차적으로 체이닝하여 작업을 실행합니다.
 사용자가 지정한 에이전트들을 순서대로 호출하며, 이전 에이전트의 결과를 다음 에이전트에 전달합니다.
 

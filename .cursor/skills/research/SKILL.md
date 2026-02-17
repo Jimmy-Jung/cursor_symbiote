@@ -6,6 +6,8 @@ source: origin
 
 # Research — 병렬 리서치 오케스트레이션
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills research`
+
 여러 소스를 동시에 탐색하여 기술 조사를 수행합니다.
 
 ## 참조

@@ -6,6 +6,8 @@ source: origin
 
 # 리팩토링 검증 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills refactoring`
+
 ## 7단계 검증 프로세스
 
 0단계: 프로젝트 타입 및 범위 식별

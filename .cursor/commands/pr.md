@@ -2,6 +2,8 @@
 
 # PR
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands pr`
+
 현재 브랜치의 변경사항을 분석하고 Pull Request를 생성합니다:
 
 1. `.cursor/rules/project/context.mdc`를 읽어 프로젝트 컨벤션을 파악합니다.

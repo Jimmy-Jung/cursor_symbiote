@@ -7,6 +7,8 @@ source: origin
 
 # Doctor — 자기 진단
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills doctor`
+
 .cursor 설정의 건강 상태를 자동으로 검사하고 수정을 제안합니다.
 
 ## 진단 항목

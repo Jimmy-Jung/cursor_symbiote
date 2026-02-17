@@ -7,6 +7,8 @@ source: origin
 
 # Setup Skill
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills setup`
+
 프로젝트 부트스트랩 Skill. 코드베이스를 분석하여 프로젝트 스택을 감지하고, manifest.json과 context.mdc를 자동 생성합니다. 새 프로젝트에 .cursor를 처음 적용할 때 사용합니다.
 
 ## 진입 조건 (Entry Condition)

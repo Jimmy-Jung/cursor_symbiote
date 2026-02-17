@@ -7,6 +7,8 @@ source: origin
 
 # 검증 루프 (Verify Loop)
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills verify-loop`
+
 자율 작업 루프의 자기 수정 동작 가이드라인.
 
 ## 자기 수정 루프 흐름

@@ -2,6 +2,8 @@
 
 # Analyze
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands analyze`
+
 analyst 에이전트로 대상에 대해 심층 분석을 수행합니다:
 
 1. `.cursor/rules/project/context.mdc`를 먼저 읽어 프로젝트 컨텍스트를 파악하세요.

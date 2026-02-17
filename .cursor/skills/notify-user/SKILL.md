@@ -7,6 +7,8 @@ source: origin
 
 # Notify User — IDE-Slack 에스컬레이션
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills notify-user`
+
 Cursor 에이전트가 사용자 입력이 필요할 때 2가지 모드로 동작합니다:
 
 Slack-First 모드 (자율 루프 중):

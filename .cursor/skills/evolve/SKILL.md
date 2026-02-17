@@ -7,6 +7,8 @@ source: origin
 
 # Evolve Skill
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills evolve`
+
 프로젝트 변화를 감지하고 .cursor 설정을 진화시킵니다. 새로운 의존성, 아키텍처 패턴 변경, 코드베이스 성장에 맞춰 rules와 context를 업데이트합니다.
 
 ## 진입 조건 (Entry Condition)

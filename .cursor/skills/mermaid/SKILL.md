@@ -6,6 +6,8 @@ source: origin
 
 # Mermaid 다이어그램 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills mermaid`
+
 ## 지원 다이어그램
 
 flowchart, sequence, class, state, ER, gantt

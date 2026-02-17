@@ -6,6 +6,8 @@ source: origin
 
 # Deep Search — 다중 전략 코드베이스 탐색
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills deep-search`
+
 다양한 검색 전략을 병렬로 실행하여 코드베이스를 심층 탐색합니다.
 단일 검색으로는 찾기 어려운 관계, 패턴, 숨겨진 의존성을 발견합니다.
 

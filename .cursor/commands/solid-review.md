@@ -2,6 +2,8 @@
 
 # SOLID 원칙 분석
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands solid-review`
+
 대상 코드에 SOLID 원칙을 적용하여 설계 품질을 분석하고 리팩토링을 제안합니다:
 
 1. `.cursor/skills/solid/SKILL.md`를 읽어 SOLID 원칙 워크플로우를 로드합니다.

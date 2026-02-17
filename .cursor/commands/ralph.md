@@ -2,6 +2,8 @@
 
 # Ralph Loop
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands ralph`
+
 완료까지 멈추지 않는 자기참조 자율 실행 루프를 시작합니다:
 
 1. `.cursor/rules/project/context.mdc`를 먼저 읽어 프로젝트 컨텍스트를 파악하세요.

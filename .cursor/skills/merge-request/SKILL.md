@@ -6,6 +6,8 @@ source: origin
 
 # Merge Request / Pull Request 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills merge-request`
+
 ## PR 제목 컨벤션
 
 형식: `type(scope): subject`

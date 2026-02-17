@@ -6,6 +6,8 @@ source: origin
 
 # 코드 정확성 (Code Accuracy)
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills code-accuracy`
+
 언어/플랫폼에 무관하게 적용되는 코드 작성 핵심 원칙. 환각(hallucination) 코드 생성 방지와 실제 동작 가능한 코드 생성을 목표로 한다.
 
 ## 핵심 원칙

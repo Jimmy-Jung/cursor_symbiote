@@ -7,6 +7,8 @@ source: origin
 
 # Ralplan — 반복적 기획 합의
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills ralplan`
+
 Planner → Architect → Critic 순환을 통해 계획을 반복적으로 정제합니다.
 
 ## 참조

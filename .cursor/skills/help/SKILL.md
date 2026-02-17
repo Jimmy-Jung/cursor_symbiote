@@ -7,6 +7,8 @@ source: origin
 
 # Help — 사용 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills help`
+
 사용 가능한 에이전트, 스킬, 커맨드, 키워드 목록을 표시합니다.
 
 ## 워크플로우

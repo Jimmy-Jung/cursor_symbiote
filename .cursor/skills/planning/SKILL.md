@@ -6,6 +6,8 @@ source: origin
 
 # 개발 계획 (Development Planning)
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills planning`
+
 언어/플랫폼에 무관하게 적용되는 소프트웨어 개발 계획 방법론.
 
 ## 요구사항 인터뷰

@@ -7,6 +7,8 @@ source: origin
 
 # PRD Skill
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills prd`
+
 PRD(Product Requirements Document)를 초기화하고 관리합니다. 복잡한 Feature의 요구사항을 user stories와 acceptance criteria로 정형화하고 진행 상황을 추적합니다.
 
 ## 사용 시점

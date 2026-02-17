@@ -2,6 +2,8 @@
 
 # Autopilot
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands autopilot`
+
 4-Phase 워크플로우를 병렬 최대 성능으로 자동 실행합니다.
 각 단계의 입출력이 명확하게 정의된 파이프라인이며, 독립 작업은 병렬 에이전트로 동시 처리합니다.
 

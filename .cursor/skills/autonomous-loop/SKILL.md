@@ -7,6 +7,8 @@ source: origin
 
 # Autonomous Loop
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills autonomous-loop`
+
 Plan→Execute→Verify를 반복하여 복잡한 작업을 자율적으로 완성합니다.
 사용자 개입 없이 계획 수립부터 구현, 검증, 수정까지 수행합니다.
 

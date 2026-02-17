@@ -7,6 +7,8 @@ source: origin
 
 # Reverse Engineering — 레거시 코드베이스 분석
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills reverse-engineering`
+
 문서가 없는 코드베이스를 체계적으로 분석하여 아키텍처, 비즈니스 로직, 의존성을 파악합니다.
 
 ## 6-Phase 프로세스 개요

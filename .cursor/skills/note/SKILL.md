@@ -6,6 +6,8 @@ source: origin
 
 # Note — Compaction 내성 메모장
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills note`
+
 중요한 컨텍스트를 작업별 state 폴더에 저장하여, 컨텍스트 윈도우 초과(compaction) 시에도 정보가 보존됩니다.
 `.gitignore`로 git 추적에서 제외되어 프로젝트를 오염시키지 않습니다.
 

@@ -6,6 +6,8 @@ source: origin
 
 # 문서화 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills documentation`
+
 ## 핵심 원칙
 
 프로젝트를 처음 접하는 개발자가 전반적인 구조와 기능을 이해할 수 있도록 체계적인 문서를 생성합니다. 모든 문서 내용은 실제 코드베이스 분석을 기반으로 작성하며, 추측으로 작성하지 않습니다.

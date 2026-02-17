@@ -6,6 +6,8 @@ source: origin
 
 # Build Fix — 빌드 오류 자동 수정
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills build-fix`
+
 빌드 오류를 진단하고 최소한의 변경으로 수정합니다.
 
 ## 참조

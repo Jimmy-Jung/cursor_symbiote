@@ -7,6 +7,8 @@ source: origin
 
 # TDD — 테스트 주도 개발 워크플로우
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills tdd`
+
 Red-Green-Refactor 사이클을 따르는 TDD 강제 워크플로우입니다.
 
 ## 참조

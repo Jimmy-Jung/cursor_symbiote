@@ -7,6 +7,8 @@ source: origin
 
 # SOLID 원칙 - iOS 객체지향 설계 가이드
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills solid`
+
 SOLID 원칙을 적용하여 유지보수 가능하고 확장 가능한 iOS 코드를 작성한다.
 의존성 관리, 책임 분리, 확장성을 고려한 설계를 지원한다.
 

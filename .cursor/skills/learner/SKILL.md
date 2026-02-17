@@ -7,6 +7,8 @@ source: origin
 
 # Learner — 패턴 학습 및 추출
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills learner`
+
 세션에서 반복되는 작업 패턴을 감지하고, 재사용 가능한 스킬이나 룰로 자동 추출합니다.
 
 ## 참조

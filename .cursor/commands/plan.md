@@ -2,6 +2,8 @@
 
 # Plan
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands plan`
+
 analyst + planner 에이전트로 기획 세션을 시작합니다:
 
 1. `.cursor/rules/project/context.mdc`를 먼저 읽어 프로젝트 컨텍스트를 파악하세요.

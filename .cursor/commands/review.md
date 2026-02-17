@@ -2,6 +2,8 @@
 
 # Review
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands review`
+
 현재 변경사항에 대해 코드 리뷰를 실행합니다:
 
 1. `.cursor/rules/project/context.mdc`를 읽어 프로젝트 컨벤션을 파악합니다.

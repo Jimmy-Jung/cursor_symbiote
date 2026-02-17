@@ -6,6 +6,8 @@ source: origin
 
 # Security Review — 보안 취약점 검토
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills security-review`
+
 코드의 보안 취약점을 체계적으로 검사하고 수정 방안을 제시합니다.
 
 ## 참조

@@ -6,6 +6,8 @@ source: origin
 
 # Deep Index Skill
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills deep-index`
+
 코드베이스 인덱싱 및 구조 분석. 프로젝트를 스캔하여 모듈별 요약, 의존성 그래프, 진입점 맵을 생성하고 context를 풍부하게 합니다.
 
 ## 사용 시점

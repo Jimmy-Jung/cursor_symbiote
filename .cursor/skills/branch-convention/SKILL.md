@@ -6,6 +6,8 @@ source: origin
 
 # Git 브랜치 컨벤션
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills branch-convention`
+
 ## 브랜치 네이밍 형식
 
 `type/description` 또는 `type/TICKET-XXX-description`

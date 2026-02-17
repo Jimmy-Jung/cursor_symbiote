@@ -2,6 +2,8 @@
 
 # Clean
 
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands clean`
+
 완료된 작업의 상태 폴더를 정리합니다.
 
 1. `.cursor/project/state/` 하위 모든 task-folder를 스캔합니다.

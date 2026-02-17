@@ -7,6 +7,8 @@ source: origin
 
 # Cancel — 통합 취소
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills cancel`
+
 실행 중인 자율 루프(Ralph Loop, Autopilot)를 안전하게 중단합니다.
 
 ## 취소 워크플로우

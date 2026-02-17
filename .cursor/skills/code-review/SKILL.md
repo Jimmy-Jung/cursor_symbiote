@@ -6,6 +6,8 @@ source: origin
 
 # Code Review — 독립 코드 리뷰
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills code-review`
+
 코드 품질, 패턴 준수, 보안, 성능을 종합적으로 검토합니다.
 
 ## 참조

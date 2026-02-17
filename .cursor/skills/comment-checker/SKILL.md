@@ -6,6 +6,8 @@ source: origin
 
 # Comment Checker — 주석 품질 관리
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills comment-checker`
+
 AI가 생성한 코드에서 불필요한 주석을 감지하고, 좋은 주석 원칙에 따라 제거 또는 개선을 제안합니다.
 
 ## 나쁜 주석 카테고리 (상세)

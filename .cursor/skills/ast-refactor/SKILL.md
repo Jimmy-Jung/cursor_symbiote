@@ -9,6 +9,8 @@ source: origin
 
 # AST Refactor Skill
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills ast-refactor`
+
 ast-grep를 활용한 구조적 코드 검색 및 리팩토링. 텍스트 매칭이 아닌 AST(추상 구문 트리) 기반으로 코드 패턴을 정밀하게 검색하고 치환합니다.
 
 ## ast-grep이란

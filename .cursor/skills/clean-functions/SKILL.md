@@ -6,6 +6,8 @@ source: origin
 
 # Clean Functions 원칙
 
+> @-tracking: `bash .cursor/hooks/usage-tracker.sh skills clean-functions`
+
 ## 5단계 리뷰 워크플로우
 
 1. 코드 입력 수집: 대상 코드를 받아 언어 식별, 개요 파악, 초기 인상 정리
