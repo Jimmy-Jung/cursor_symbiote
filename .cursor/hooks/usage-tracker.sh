@@ -3,7 +3,7 @@
 # Cursor usage tracker — triple-mode: postToolUse hook + subagentStart hook + CLI.
 #
 # Hook mode (stdin):       postToolUse(Read) — 스킬/커맨드/에이전트/시스템 스킬 자동 추적
-# SubAgent mode (stdin):   subagentStart — 빌트인 서브에이전트 자동 추적
+# SubAgent mode (stdin):   subagentStart — 빌트인 서브에이전트 + 매칭 커스텀 에이전트 자동 추적
 # CLI mode (args):         에이전트 자기보고 — 인라인 로드 시 직접 호출
 #
 # CLI usage:
@@ -112,6 +112,10 @@ if [ -n "$SUBAGENT_TYPE" ]; then
   CLEAN_TYPE=$(printf '%s' "$SUBAGENT_TYPE" | tr -cd 'a-zA-Z0-9_-')
   if [ -n "$CLEAN_TYPE" ]; then
     increment_counter "subagents" "$CLEAN_TYPE"
+    # Auto-track matching custom agent (.cursor/agents/{type}.md)
+    if [ -f ".cursor/agents/${CLEAN_TYPE}.md" ]; then
+      increment_counter "agents" "$CLEAN_TYPE"
+    fi
   fi
   printf '{}\n'
   exit 0
