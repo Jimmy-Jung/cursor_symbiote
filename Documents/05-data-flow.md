@@ -58,7 +58,7 @@ sequenceDiagram
 |------|------|----------|
 | `ralph-state.md` | 자율 루프 제어 | 루프 시작 → 루프 종료 |
 | `notepad.md` | 작업 메모, 에이전트 간 공유 | 작업 시작 → `/clean` |
-| `prd.json` | PRD, acceptance criteria | `/prd` → 구현 완료 |
+| `prd.md` | PRD, acceptance criteria | `/prd` → 구현 완료 |
 
 모든 작업 상태는 `project/state/{task-folder}/`에 격리됩니다.
 

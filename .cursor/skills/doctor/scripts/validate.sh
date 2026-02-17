@@ -75,7 +75,7 @@ if [ -f "$HOOKS_FILE" ]; then
   fi
 
   # 유효한 이벤트 이름 확인
-  VALID_EVENTS="sessionStart preToolUse postToolUse afterFileEdit"
+  VALID_EVENTS="sessionStart preToolUse postToolUse subagentStart afterFileEdit"
   EVENTS=$(jq -r '.hooks | keys[]' "$HOOKS_FILE" 2>/dev/null || echo "")
   for event in $EVENTS; do
     if echo "$VALID_EVENTS" | grep -qw "$event"; then

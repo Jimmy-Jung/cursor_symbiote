@@ -15,12 +15,14 @@ tests/
 ├── hooks/                     # Layer 1: 훅 스크립트 단위 테스트
 │   ├── setup-check.bats
 │   ├── guard-shell.bats
+│   ├── usage-tracker.bats
 │   ├── recovery.bats
 │   ├── todo-continuation.bats
 │   └── comment-checker.bats
 └── fixtures/                  # 테스트 데이터
     ├── ralph-state-active.md
     ├── ralph-state-inactive.md
+    ├── prd-sample.md
     ├── sample-code-many-comments.swift
     └── sample-code-clean.swift
 ```
@@ -62,18 +64,19 @@ bash .cursor/skills/doctor/scripts/validate.sh
 
 | Layer | 유형 | 자동화 | 설명 |
 |-------|------|--------|------|
-| Layer 1 | 훅 스크립트 단위 테스트 | 자동 (bats) | 5개 훅의 입출력을 60개 케이스로 검증 |
+| Layer 1 | 훅 스크립트 단위 테스트 | 자동 (bats) | 6개 훅의 입출력을 122개 케이스로 검증 |
 | Layer 2 | 구조 검증 스크립트 | 자동 (validate.sh) | frontmatter, 경로 참조, 스키마 유효성 검사 |
 | Layer 3 | 시나리오 체크리스트 | 수동 | 에이전트/스킬 행동 24개 시나리오 수동 확인 |
 
 ## 테스트 케이스 요약
 
-### Layer 1: 훅 스크립트 (60 tests)
+### Layer 1: 훅 스크립트 (122 tests)
 
 | 훅 | 테스트 수 | 검증 내용 |
 |----|-----------|-----------|
 | setup-check.sh | 6 | manifest.json/ralph-state.md 상태별 출력 |
 | guard-shell.sh | 23 | 위험 명령 차단, 안전 명령 허용, 엣지 케이스 |
+| usage-tracker.sh | 62 | CLI/Hook/SubAgent 모드, 5개 카테고리, 검증, 크로스 모드 |
 | recovery.sh | 10 | 도구별 에러 복구 메시지, 비매칭 도구 무시 |
 | todo-continuation.sh | 10 | Ralph Loop 활성 시 TODO 연속 알림 |
 | comment-checker.sh | 11 | 파일 타입 필터링, 주석 패턴 탐지 |
@@ -89,4 +92,4 @@ bash .cursor/skills/doctor/scripts/validate.sh
 
 ### Layer 3: 시나리오 체크리스트
 
-scenarios.md 참조. 에이전트 초기화, 스킬 활성화, 훅 트리거, 모드 감지, 워크플로우 등 24개 시나리오.
+scenarios.md 참조. 에이전트 초기화, 스킬 활성화, 훅 트리거, 모드 감지, PRD, 워크플로우 등 28개 시나리오.

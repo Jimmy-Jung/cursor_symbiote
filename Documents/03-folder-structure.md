@@ -140,7 +140,7 @@
         └── {ISO8601}_{task-name}/  # 작업별 격리 폴더
             ├── ralph-state.md      # 루프 제어 메타데이터
             ├── notepad.md          # Compaction 내성 메모장
-            └── prd.json            # PRD (선택)
+            └── prd.md              # PRD (선택)
 ```
 
 ## 핵심 디렉터리 설명
@@ -176,7 +176,7 @@ YAML frontmatter에 `name`, `description`, `model`, `readonly` 필드가 있습�
 
 ### `project/state/`
 
-작업별 격리 폴더(`{ISO8601}_{task-name}/`)가 생성됩니다. Ralph Loop의 상태(`ralph-state.md`), 메모장(`notepad.md`), PRD(`prd.json`)가 저장됩니다. 완료 후 `/clean`으로 정리합니다.
+작업별 격리 폴더(`{ISO8601}_{task-name}/`)가 생성됩니다. Ralph Loop의 상태(`ralph-state.md`), 메모장(`notepad.md`), PRD(`prd.md`)가 저장됩니다. 완료 후 `/clean`으로 정리합니다.
 
 ### `project/usage-data/`
 

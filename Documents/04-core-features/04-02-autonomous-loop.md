@@ -24,7 +24,7 @@ Autonomous Loop은 Plan→Execute→Verify를 반복하여 복잡한 작업을 �
 .cursor/project/state/{ISO8601-basic}_{task-name}/
 ├── ralph-state.md     # 루프 제어 메타데이터
 ├── notepad.md         # 작업 메모 (note 스킬)
-└── prd.json           # PRD (선택)
+└── prd.md             # PRD (선택)
 ```
 
 예시: `2026-02-13T1430_login-feature`

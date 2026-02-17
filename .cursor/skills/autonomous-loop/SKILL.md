@@ -18,7 +18,7 @@ Plan→Execute→Verify를 반복하여 복잡한 작업을 자율적으로 완�
 .cursor/project/state/{ISO8601-basic}_{task-name}/
 ├── ralph-state.md     # 루프 제어 메타데이터
 ├── notepad.md         # 작업 메모 (note 스킬)
-└── prd.json           # PRD (선택)
+└── prd.md             # PRD (선택)
 ```
 
 폴더 네이밍 예시: `2026-02-13T1430_login-feature`
@@ -112,8 +112,8 @@ context.mdc의 프로젝트 패턴을 따르며 구현. 독립 작업은 병렬 
 
 ## PRD 연동
 
-- task-folder 내 `prd.json`이 존재하면 사용
-- prd.json의 userStories.acceptanceCriteria를 completion 검증 항목으로 활용
+- task-folder 내 `prd.md`가 존재하면 사용
+- prd.md의 User Stories Acceptance Criteria 체크박스를 completion 검증 항목으로 활용
 
 ## 에스컬레이션 규칙
 

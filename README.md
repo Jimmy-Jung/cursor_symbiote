@@ -233,7 +233,7 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
         └── {ISO8601}_{task-name}/  # 작업별 격리 폴더
             ├── ralph-state.md      # 루프 제어 메타데이터
             ├── notepad.md          # Compaction 내성 메모장
-            └── prd.json            # PRD (선택)
+            └── prd.md              # PRD (선택)
 ```
 
 ---
@@ -612,7 +612,7 @@ brew install bats-core jq
 |-------|------|--------|------|
 | Layer 1 | 훅 스크립트 단위 테스트 | 자동 (bats) | 6개 훅의 입출력을 122개 케이스로 검증 |
 | Layer 2 | 구조 검증 스크립트 | 자동 (validate.sh) | frontmatter, 경로 참조, 스키마 유효성 검사 |
-| Layer 3 | 시나리오 체크리스트 | 수동 | 에이전트/스킬 행동 24개 시나리오 수동 확인 |
+| Layer 3 | 시나리오 체크리스트 | 수동 | 에이전트/스킬 행동 28개 시나리오 수동 확인 |
 
 ### Layer 1: 훅 스크립트 단위 테스트 (122 tests)
 

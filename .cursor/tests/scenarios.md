@@ -240,7 +240,66 @@ hooks.json에 정의된 훅이 의도된 시점에 실행되는지 확인합니�
 
 ---
 
-## 5. 4-Phase 워크플로우 시나리오
+## 5. PRD 시나리오
+
+PRD 스킬이 올바른 형식으로 생성되고 진행 추적이 작동하는지 확인합니다.
+
+### S-25: /prd 스킬로 PRD 생성
+
+- 입력: "/prd 사용자 알림 시스템을 만들어줘"
+- 기대 행동:
+  - Analyst 에이전트가 요구사항 인터뷰 시작
+  - task-folder 생성 (`state/{ISO8601}_{task-name}/`)
+  - `prd.md` 파일 생성 (JSON이 아닌 Markdown 형식)
+  - User Stories가 `### US-001:` 형식으로 작성
+  - Acceptance Criteria가 체크박스(`- [ ] AC-1:`) 형식
+  - Risks 테이블, Scope 섹션 포함
+- 검증:
+  - prd.md가 Markdown 형식인지 확인 (prd.json이 아님)
+  - 파일 헤더에 `# PRD:`, description, completionLevel 메타데이터 존재
+  - User Story마다 as/iWant/soThat/status/implementedIn 필드 존재
+  - Acceptance Criteria가 체크박스 목록인지 확인
+- 결과: [ ]
+
+### S-26: PRD 진행 추적 — status 및 체크박스 업데이트
+
+- 조건: task-folder에 prd.md가 존재하고 구현 진행 중
+- 기대 행동:
+  - 구현 시작 시 해당 user story의 `status: pending` → `status: in_progress` 변경
+  - 완료 시 `status: done`으로 변경, `implementedIn:`에 파일 경로 추가
+  - 완료된 acceptance criteria의 체크박스를 `[x]`로 체크
+- 검증:
+  - prd.md 내 status 변경이 반영되어 있는지 확인
+  - implementedIn에 실제 구현 파일 경로가 기록되어 있는지 확인
+  - 완료된 AC 체크박스가 `[x]`로 체크되어 있는지 확인
+- 결과: [ ]
+
+### S-27: autonomous-loop + PRD 연동
+
+- 조건: `/ralph`로 자율 루프 시작, task-folder에 prd.md 존재
+- 기대 행동:
+  - autonomous-loop이 prd.md를 자동 로드
+  - VERIFY 단계에서 prd.md의 Acceptance Criteria 체크박스를 검증 항목으로 사용
+  - 모든 AC가 `[x]` 상태가 될 때까지 루프 진행
+  - ralph-state.md의 prdPath에 prd.md 경로 기록
+- 검증:
+  - VERIFY 단계 보고에 AC 항목별 통과/실패 상태 포함
+  - 완료 시 모든 user story의 status가 done
+- 결과: [ ]
+
+### S-28: PRD 상태 보고 형식
+
+- 조건: prd.md가 존재하고 일부 user story가 완료된 상태
+- 기대 행동:
+  - PRD 상태 보고 형식으로 진행 현황 출력
+  - `[PRD 상태] {title}` 형식의 요약
+  - 완료/진행 중/대기/Blocked 카테고리별 story 분류
+- 검증: 보고 형식이 SKILL.md에 정의된 형식과 일치
+- 결과: [ ]
+
+---
+
+## 6. 4-Phase 워크플로우 시나리오
 
 작업 복잡도에 따라 올바른 워크플로우가 선택되는지 확인합니다.
 
