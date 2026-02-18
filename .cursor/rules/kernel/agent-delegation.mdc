@@ -1,48 +1,78 @@
 ---
-description: Phase별 에이전트 위임 규칙과 에이전트 생성 가이드. Subagent에 작업을 위임하거나 에이전트를 선택할 때 적용.
+description: 작업 복잡도 분류, Phase별 에이전트 위임, 병렬 디스패치, 스킬 조합 등 오케스트레이션 전략. Subagent에 작업을 위임하거나 에이전트를 선택할 때 적용.
 alwaysApply: false
 source: origin
 ---
 
-# Agent Delegation — 에이전트 위임 및 생성 가이드
+# Agent Delegation — 오케스트레이션 및 에이전트 위임 가이드
 
 > 이 룰은 의도적으로 "Applied intelligently" 방식이며, 스킬로 마이그레이션하지 않습니다.
 
 Subagent에 작업을 위임할 때 자동 적용되는 가이드입니다.
 
+## 작업 복잡도 분류
+
+작업 복잡도에 따라 적절한 워크플로우를 선택합니다.
+
+| 복잡도 | 기준 | 워크플로우 |
+|--------|------|-----------|
+| Complex | 3개 이상 파일, 새 Feature, 대규모 리팩토링 | 4-Phase 전체 (Analyze → Plan → Execute → Verify), 실패 시 Phase 2 회귀 |
+| Medium | 버그 수정, 단일 API 추가, 마이그레이션 | debugger/implementer/migrator → reviewer |
+| Simple | 단일 파일 수정, 질문, 설명 | Subagent 없이 직접 처리 (overhead 방지) |
+| Autonomous | 대규모 자율 작업 | `/ralph` 또는 `/autopilot` 커맨드 사용 |
+
 ## 커스텀 에이전트 (프로젝트 컨벤션 적용)
 
 다음 에이전트는 `.cursor/agents/`에 정의되어 프로젝트 컨벤션과 context.mdc를 로드합니다:
 
-| 에이전트 | 역할 | Phase |
-|----------|------|-------|
-| analyst | 사전 분석, 요구사항 정제, 리스크 식별 | Phase 0 |
-| planner | 전략 기획, 영향도 분석 | Phase 1 |
-| critic | 계획 비판적 검토, Ralph Loop 통합 | Phase 1 |
-| implementer | Feature 구현, 프로젝트 패턴 준수 | Phase 2 |
-| reviewer | 코드 리뷰, 프로젝트 특화 체크리스트 | Phase 3 |
-| debugger | 디버깅, 메모리 릭, 성능 이슈 | Phase 2 |
+### Phase 0: Analyze
 
-## Cursor 빌트인 subagent_type 활용
+| 에이전트 | 역할 | readonly | model |
+|----------|------|----------|-------|
+| analyst | 사전 분석, 요구사항 정제, 리스크 식별 | true | fast |
+| researcher | 기술 리서치, 라이브러리/API 비교 분석 | true | fast |
+| vision | 스크린샷/목업 시각적 분석, 디자인 사양 추출 | true | fast |
 
-Cursor가 제공하는 빌트인 subagent_type과 용도 매핑:
+### Phase 1: Plan
 
-| 작업 | subagent_type | 설명 |
-|------|---------------|------|
-| 코드 탐색, 구조 파악 | explore | 코드베이스 탐색, 파일 검색, 패턴 분석 |
-| 터미널 명령 실행 | shell | git, npm, 빌드 도구 등 CLI 작업 |
-| 브라우저 테스트 | browser-use | 웹 UI 테스트, 스크린샷, 폼 자동화 |
-| 범용 멀티스텝 작업 | generalPurpose | 복합 검색, 코드 조사, 멀티스텝 실행 |
-| 사전 분석 | analyst | 요구사항 정제, 스코프 분석 (비판적 관점) |
-| 계획 비판적 검토 | critic | 계획의 완전성, 의존성, 리스크 검증 |
-| 전략 기획 | planner | 구현 계획, 단계별 의존성, 리스크 평가 |
-| 코드 구현 | implementer | Feature 개발, 프로젝트 패턴 준수 |
-| 디버깅 | debugger | 버그 수정, 메모리 릭, 성능 이슈 |
-| 코드 리뷰 | reviewer | 코드 품질, 패턴 준수, 보안 검토 |
+| 에이전트 | 역할 | readonly | model |
+|----------|------|----------|-------|
+| planner | 전략 기획, 영향도 분석, 단계별 계획 | true | inherit |
+| critic | 계획 비판적 검토, 완전성/리스크 검증 | true | fast |
+| architect | 아키텍처 구조 분석, 모듈 경계, 의존성 그래프 | true | fast |
+| designer | UI/UX 패턴 평가, 접근성, 디자인 시스템 분석 | true | fast |
 
-빌트인 subagent에 프로젝트 컨텍스트를 전달하려면, Task tool의 prompt에 context.mdc의 핵심 정보를 포함합니다.
+### Phase 2: Execute
 
-주의: 커스텀 에이전트(analyst, planner, critic, implementer, reviewer, debugger)는 `.cursor/agents/`에 정의된 프로젝트 특화 버전이 우선 사용됩니다. 빌트인 subagent_type은 커스텀 에이전트가 없는 작업에 사용합니다.
+| 에이전트 | 역할 | readonly | model |
+|----------|------|----------|-------|
+| implementer | Feature 구현, 프로젝트 패턴 준수 | false | inherit |
+| debugger | 디버깅, 메모리 릭, 성능 이슈 진단/수정 | false | inherit |
+| build-fixer | 빌드 오류 진단, 컴파일/타입/의존성 수정 | false | inherit |
+| migrator | API/프레임워크 마이그레이션, 스키마 변경 | false | inherit |
+| tdd-guide | TDD Red-Green-Refactor 워크플로우 가이드 | false | inherit |
+
+### Phase 3: Verify
+
+| 에이전트 | 역할 | readonly | model |
+|----------|------|----------|-------|
+| reviewer | 코드 리뷰, 패턴 준수, 리팩토링 검증 | true | fast |
+| qa-tester | 수용 기준 검증, 엣지케이스, 테스트 커버리지 | true | fast |
+| security-reviewer | 보안 취약점 분석, 인젝션/XSS/시크릿 노출 | true | fast |
+| doc-writer | README, API 문서, 아키텍처 문서, 온보딩 가이드 | false | inherit |
+
+## 빌트인 전용 subagent_type
+
+커스텀 에이전트가 없는 인프라 subagent_type:
+
+| subagent_type | 용도 |
+|---------------|------|
+| explore | 코드베이스 탐색, 파일 검색, 패턴 분석 |
+| shell | git, npm, 빌드 도구 등 CLI 작업 |
+| browser-use | 웹 UI 테스트, 스크린샷, 폼 자동화 |
+| generalPurpose | 복합 검색, 코드 조사, 멀티스텝 실행 |
+
+위 커스텀 에이전트 16개는 동명의 빌트인 subagent_type이 존재하지만, 커스텀 에이전트가 context.mdc를 로드하여 프로젝트 컨벤션을 적용하므로 우선 사용됩니다.
 
 ---
 
@@ -50,34 +80,82 @@ Cursor가 제공하는 빌트인 subagent_type과 용도 매핑:
 
 ### Phase 0: Analyze
 - 복잡한 Feature 요청 시: analyst에 위임
+- 기술 리서치/비교 분석 시: researcher에 위임
+- 스크린샷/목업 분석 시: vision에 위임
 - 심층 코드베이스 탐색 시: deep-search 스킬 적용
 
 ### Phase 1: Plan
 - 전략 기획 요청 시: planner에 위임 → critic으로 계획 검증
-- 아키텍처 결정 필요 시: planner + critic 조합 또는 generalPurpose subagent
+- 아키텍처 결정 필요 시: architect에 위임 → critic으로 검증
+- UI/UX 설계 분석 시: designer에 위임
 - PRD 필요 시: prd 스킬 적용
+- 조합: architect + planner (구조 결정 → 구현 계획), designer + implementer (디자인 분석 → 구현)
 
 ### Phase 2: Execute
 - Feature 구현 시: implementer에 위임
 - UI 구현 시: implementer (design-principles 스킬 적용)
-- 빌드 오류 시: debugger 또는 build-fix 스킬 적용
-- TDD 워크플로우 시: tdd 스킬 적용
+- 빌드 오류 시: build-fixer에 위임
+- 런타임 버그/성능 이슈 시: debugger에 위임
+- TDD 워크플로우 시: tdd-guide에 위임
+- API/프레임워크 마이그레이션 시: migrator에 위임
 - 대규모 자율 작업 시: /autopilot 또는 /ralph 커맨드 적용
 - 구조적 리팩토링 시: ast-refactor 스킬 안내
 
 ### Phase 3: Verify
 - 코드 리뷰 시: reviewer에 위임
-- 테스트 검증 시: reviewer + implementer 병렬 (테스트 코드 작성)
-- 보안 검토 시: reviewer (security-review 스킬 적용)
-- 문서화 시: implementer (documentation 스킬 적용)
+- 수용 기준/테스트 커버리지 검증 시: qa-tester에 위임
+- 테스트 코드 작성 필요 시: qa-tester → implementer 순차 (갭 분석 → 구현)
+- 보안 검토 시: security-reviewer에 위임
+- 문서화 시: doc-writer에 위임
 
 ### Support (Phase 횡단)
-- 라이브러리/API 조사 시: explore subagent 또는 research 스킬
+- 라이브러리/API 조사 시: researcher에 위임 또는 research 스킬
 - 코드베이스 탐색 시: explore subagent
 - 브라우저 테스트 시: browser-use subagent
+- 터미널 작업 시: shell subagent
 
 ### Direct Handling
 - 단순한 작업이나 질문은 Subagent 없이 직접 처리
+
+---
+
+## Parallel Agent Dispatch
+
+독립적인 작업은 Task tool로 병렬 실행합니다 (최대 4개):
+
+- 분석 단계: analyst + deep-search 동시 실행
+- 기획 단계: planner + deep-search 동시 실행
+- 구현 완료 후: reviewer + qa-tester 동시 실행
+- 탐색 단계: Grep + SemanticSearch + Glob 동시 실행
+
+---
+
+## Skill Composition (3-Layer)
+
+스킬을 레이어로 조합하여 실행 전략을 결정합니다:
+
+```
+Guarantee Layer (선택, 0-1):  ralph — "검증 완료까지 멈추지 않음"
+Enhancement Layer (0-N):      autopilot(병렬) | tdd(테스트우선) | ecomode(절약)
+Execution Layer (필수, 1):    default(구현) | orchestrate(조율) | planner(기획)
+```
+
+공식: [Execution] + [0-N Enhancement] + [Optional Guarantee]
+
+---
+
+## Completion Criteria Reference
+
+verify-loop 스킬에 정의된 4-Level 기준을 참조합니다:
+
+| Level | 이름 | 적용 상황 |
+|-------|------|----------|
+| 1 | Minimal | 단순 수정 |
+| 2 | Standard | 일반 작업 |
+| 3 | Thorough | Feature 구현 |
+| 4 | Production | 릴리즈 |
+
+프로젝트 설정의 `defaults.completionLevel`이 프로젝트 기본값을 결정합니다.
 
 ---
 

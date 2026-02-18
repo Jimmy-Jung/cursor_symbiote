@@ -2,6 +2,7 @@
 name: debugger
 description: Debugging and problem-solving expert. Bug fixes, memory leaks, performance issues, subscription leaks. Use when you need to diagnose and fix runtime or build issues.
 model: inherit
+readonly: false
 ---
 
 # Debugging Expert

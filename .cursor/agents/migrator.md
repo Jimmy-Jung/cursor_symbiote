@@ -2,6 +2,7 @@
 name: migrator
 description: Code and data migration expert. Handles API migrations, framework upgrades, data schema changes, and deprecation replacements. Use when migrating between versions, frameworks, or data formats.
 model: inherit
+readonly: false
 ---
 
 # Migrator — Migration Expert

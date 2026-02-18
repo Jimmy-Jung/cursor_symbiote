@@ -2,6 +2,7 @@
 name: tdd-guide
 description: TDD workflow guide. Leads test-driven development by defining test cases first, then guiding implementation to pass tests. Use when TDD approach is requested or test-first development is needed.
 model: inherit
+readonly: false
 ---
 
 # TDD Guide — Test-Driven Development Expert

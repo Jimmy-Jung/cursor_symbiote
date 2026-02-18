@@ -2,6 +2,7 @@
 name: build-fixer
 description: Build error diagnosis and fix expert. Resolves compilation errors, type errors, missing imports, dependency conflicts, and build configuration issues. Use when build fails and targeted fixes are needed.
 model: inherit
+readonly: false
 ---
 
 # Build Fixer — Build Error Expert

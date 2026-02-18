@@ -52,16 +52,21 @@ Synapse는 하드코딩된 프로젝트 정보를 갖지 않습니다.
 |------------|-----------|------|
 | "끝까지", "완료할 때까지", "멈추지 마", "must complete" | Ralph Mode | autonomous-loop 스킬 실행 |
 | "심층 분석", "깊이 파악", "deep search" | Deep Analysis | analyst + deep-search 병렬 |
-| "보안 포함", "보안 검토", "security review" | Security Mode | security-reviewer subagent_type 사용 |
-| "테스트까지", "test included", "tdd", "test first" | QA/TDD Mode | tdd 스킬 + qa-tester subagent_type 사용 |
-| "문서화까지", "with docs" | Doc Mode | doc-writer subagent_type 사용 |
+| "보안 포함", "보안 검토", "security review" | Security Mode | security-reviewer 에이전트에 위임 |
+| "테스트까지", "test included", "tdd", "test first" | QA/TDD Mode | tdd-guide 에이전트에 위임 |
+| "문서화까지", "with docs" | Doc Mode | doc-writer 에이전트에 위임 |
 | "최대 성능", "병렬로", "autopilot", "ulw" | Autopilot | autopilot 커맨드 실행 |
 | "절약", "eco", "budget", "효율적으로" | Ecomode | ecomode 스킬 실행 |
 | "요구사항 정리", "PRD" | PRD Mode | prd 스킬 실행 |
 | "인덱싱", "코드베이스 파악" | Index Mode | deep-index 스킬 실행 |
-| "조사", "research", "리서치" | Research Mode | research 스킬 실행 |
+| "조사", "research", "리서치" | Research Mode | researcher 에이전트에 위임 |
 | "기획 합의", "ralplan" | Ralplan Mode | ralplan 스킬 실행 |
-| "빌드 수정", "build fix" | Build Fix | build-fix 스킬 실행 |
+| "빌드 수정", "build fix" | Build Fix | build-fixer 에이전트에 위임 |
+| "아키텍처", "구조 분석", "모듈 경계" | Architecture | architect 에이전트에 위임 |
+| "UI 분석", "디자인 리뷰", "접근성" | Design | designer 에이전트에 위임 |
+| "마이그레이션", "업그레이드", "migrate" | Migration | migrator 에이전트에 위임 |
+| "스크린샷 분석", "목업", "visual" | Vision | vision 에이전트에 위임 |
+| "QA", "테스트 검증", "커버리지" | QA Mode | qa-tester 에이전트에 위임 |
 | "취소", "cancel", "중단" | Cancel | cancel 스킬 실행 |
 | "도움말", "help", "사용법" | Help | help 스킬 실행 |
 
@@ -89,7 +94,7 @@ Extended 스킬 (필요 시에만 로드):
 적절한 Synapse_CoR 에이전트를 초기화합니다. 단순 작업은 Core 스킬만, 복잡한 작업은 관련 Extended 스킬을 추가로 로드합니다.
 
 ### 3. Subagent Delegation
-작업 복잡도에 따라 워크플로우를 결정합니다. 복잡한 작업 시 orchestration, agent-delegation 룰이 자동 적용되어 4-Phase Workflow를 사용합니다.
+작업 복잡도에 따라 워크플로우를 결정합니다. 복잡한 작업 시 agent-delegation 룰이 자동 적용되어 4-Phase Workflow를 사용합니다.
 
 ### 4. Guided Support
 에이전트가 사용자가 목표를 달성할 때까지 각 단계를 안내합니다.

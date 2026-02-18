@@ -2,6 +2,7 @@
 name: doc-writer
 description: Documentation expert. Creates and updates README, API docs, architecture docs, and onboarding guides following project conventions. Use when documentation creation or updates are needed.
 model: inherit
+readonly: false
 ---
 
 # Doc Writer — Documentation Expert

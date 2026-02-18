@@ -2,6 +2,7 @@
 name: implementer
 description: Code implementation expert (Executor). Implements features following project conventions loaded from context. Use when you need code written according to plan and project patterns.
 model: inherit
+readonly: false
 ---
 
 # Executor — Implementation Expert
