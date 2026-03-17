@@ -15,6 +15,17 @@ chmod +x .cursor/hooks/*.sh
 
 코드베이스를 자동 분석하여 프로젝트 스택을 감지하고 `manifest.json`과 `context.mdc`를 생성합니다.
 
+## 기본 원칙
+
+이 설정은 AI가 빠르게 코드를 만들도록 돕지만, 최우선 기준은 항상 사람이 이해하기 쉬운 코드입니다.
+
+- 짧은 코드보다 읽기 쉬운 코드
+- 영리한 축약보다 명확한 이름
+- 큰 함수보다 작은 책임
+- 설명형 주석보다 드러나는 구조
+
+세부 기준은 [Documents/09-readable-code-principles.md](Documents/09-readable-code-principles.md)를 참조하세요.
+
 ## 핵심 커맨드
 
 | 커맨드 | 용도 |
