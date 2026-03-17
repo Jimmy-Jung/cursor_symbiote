@@ -1,10 +1,8 @@
-<!-- source: origin -->
+state/*/task.json 기준 task graph를 상태별로 요약해 보여줍니다.
 
 # TM Board
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-board`
-
-`state/*/task.json` 기준 task graph를 상태별로 요약해 보여줍니다.
 
 ## 목적
 

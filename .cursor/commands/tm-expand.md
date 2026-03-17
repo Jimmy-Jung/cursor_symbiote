@@ -1,10 +1,8 @@
-<!-- source: origin -->
+큰 task를 subtasks로 분해합니다.
 
 # TM Expand
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-expand`
-
-큰 task를 subtasks로 분해합니다.
 
 ## 목적
 

@@ -1,10 +1,8 @@
-<!-- source: origin -->
+analyst 에이전트로 대상에 대해 심층 분석을 수행합니다.
 
 # Analyze
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands analyze`
-
-analyst 에이전트로 대상에 대해 심층 분석을 수행합니다:
 
 1. `.cursor/rules/project/context.mdc`를 먼저 읽어 프로젝트 컨텍스트를 파악하세요.
 2. analyst 에이전트를 호출하여 분석 대상의 요구사항과 제약사항을 분석합니다.

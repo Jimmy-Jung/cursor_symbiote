@@ -1,10 +1,8 @@
-<!-- source: origin -->
+prd.json을 읽어 작업별 task.json 초안을 생성하거나 갱신합니다.
 
 # TM Parse PRD
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-parse-prd`
-
-`prd.json`을 읽어 작업별 `task.json` 초안을 생성하거나 갱신합니다.
 
 ## 목적
 

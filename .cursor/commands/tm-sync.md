@@ -1,10 +1,8 @@
-<!-- source: origin -->
+세션 실행 상태를 task-folder의 task.json에 동기화합니다.
 
 # TM Sync
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-sync`
-
-세션 실행 상태를 task-folder의 `task.json`에 동기화합니다.
 
 ## 목적
 

@@ -1,10 +1,8 @@
-<!-- source: origin -->
+현재 변경사항에 대해 코드 리뷰를 실행합니다.
 
 # Review
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands review`
-
-현재 변경사항에 대해 코드 리뷰를 실행합니다:
 
 1. `.cursor/rules/project/context.mdc`를 읽어 프로젝트 컨벤션을 파악합니다.
 2. reviewer 에이전트를 호출하여 코드 품질과 패턴 준수를 분석합니다.

@@ -1,10 +1,8 @@
-<!-- source: origin -->
+Task Master형 상태의 구조와 정합성을 검사합니다.
 
 # TM Validate
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-validate`
-
-Task Master형 상태의 구조와 정합성을 검사합니다.
 
 ## 목적
 

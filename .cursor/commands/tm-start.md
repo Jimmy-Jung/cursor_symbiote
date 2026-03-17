@@ -1,10 +1,8 @@
-<!-- source: origin -->
+선택한 task를 현재 작업으로 시작합니다.
 
 # TM Start
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-start`
-
-선택한 task를 현재 작업으로 시작합니다.
 
 ## 목적
 

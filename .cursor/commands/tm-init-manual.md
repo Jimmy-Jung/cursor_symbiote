@@ -1,10 +1,8 @@
-<!-- source: origin -->
+샌드박스 또는 권한 제약으로 tm-init.sh를 실행할 수 없을 때 사용하는 수동 초기화 절차입니다.
 
 # TM Init Manual
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-init-manual`
-
-샌드박스 또는 권한 제약으로 `tm-init.sh`를 실행할 수 없을 때 사용하는 수동 초기화 절차입니다.
 
 ## 목적
 

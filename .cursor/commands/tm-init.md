@@ -1,10 +1,8 @@
-<!-- source: origin -->
+Task Master형 전역 task graph 상태를 초기화합니다.
 
 # TM Init
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-init`
-
-Task Master형 전역 task graph 상태를 초기화합니다.
 
 ## 목적
 

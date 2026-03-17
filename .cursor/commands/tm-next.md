@@ -1,10 +1,8 @@
-<!-- source: origin -->
+현재 실행 가능한 다음 task를 선택합니다.
 
 # TM Next
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-next`
-
-현재 실행 가능한 다음 task를 선택합니다.
 
 ## 목적
 

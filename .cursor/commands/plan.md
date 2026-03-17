@@ -1,10 +1,8 @@
-<!-- source: origin -->
+analyst + planner 에이전트로 기획 후 Cursor Plan 도구로 최종 계획을 생성합니다.
 
 # Plan
 
-analyst + planner 에이전트로 기획 후 Cursor Plan 도구로 최종 계획을 생성합니다:
-
-0. 사용 기록: `bash .cursor/hooks/usage-tracker.sh commands plan`
+> tracking: `bash .cursor/hooks/usage-tracker.sh commands plan`
 1. 모드 전환:
    - SwitchMode 도구를 호출하여 Plan 모드로 자동 전환
    - target_mode_id: "plan"

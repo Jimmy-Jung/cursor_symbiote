@@ -1,10 +1,8 @@
-<!-- source: origin -->
+작업 완료를 대응 task.json에 반영합니다.
 
 # TM Done
 
 > tracking: `bash .cursor/hooks/usage-tracker.sh commands tm-done`
-
-작업 완료를 대응 `task.json`에 반영합니다.
 
 ## 목적
 
