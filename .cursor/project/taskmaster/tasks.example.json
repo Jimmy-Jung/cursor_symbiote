@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Task graph 확장 초기화",
+      "description": "Task Master형 전역 상태 계층을 프로젝트에 도입한다.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "details": "schema를 확인하고 tasks/state/config 샘플을 준비한다.",
+      "testStrategy": "doctor와 schema 검토로 구조를 확인한다.",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "schema 파일 검토",
+          "description": "taskmaster schema와 샘플 상태 파일의 일치 여부를 확인한다.",
+          "status": "pending",
+          "priority": "high",
+          "dependencies": [],
+          "details": "tasks.schema.json, state.schema.json, config.schema.json을 검토한다.",
+          "testStrategy": "필수 키와 enum 값이 예시 파일과 일치하는지 확인한다.",
+          "metadata": {
+            "source": "manual",
+            "tag": "master",
+            "taskFolder": null,
+            "userStories": []
+          }
+        }
+      ],
+      "metadata": {
+        "source": "manual",
+        "tag": "master",
+        "taskFolder": null,
+        "userStories": ["US-001"],
+        "risks": [
+          {
+            "description": "코어 템플릿에 Task Master 가정이 새어 들어갈 수 있다.",
+            "impact": "medium",
+            "mitigation": "선택형 확장으로만 유지한다."
+          }
+        ]
+      }
+    }
+  ]
+}

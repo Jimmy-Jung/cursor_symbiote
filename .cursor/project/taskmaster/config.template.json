@@ -1,0 +1,16 @@
+{
+  "defaults": {
+    "completionLevel": 2,
+    "defaultPriority": "medium",
+    "defaultSubtasks": 5
+  },
+  "workflow": {
+    "allowCrossTagDependencies": false,
+    "autoLinkPrdStories": true
+  },
+  "execution": {
+    "plannerRole": "planner",
+    "reviewerRole": "reviewer",
+    "qaRole": "qa-tester"
+  }
+}
