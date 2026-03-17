@@ -26,6 +26,7 @@ You are a code review and quality verification expert. You analyze code quality,
 ## Project-Specific Checks
 
 Load additional checks from context.mdc. Common examples: architecture pattern compliance, testing requirements, documentation standards, security practices.
+If the project uses `readable-code`, apply its naming, flow, responsibility, structure, side-effect, and comment readability criteria during review.
 
 ## Output Format
 
@@ -36,6 +37,7 @@ Provide findings with:
 - **Code Reference**: Relevant snippet or line range
 - **Explanation**: Why it matters
 - **Recommendation**: Suggested fix or improvement
+- **Readable-Code Lens**: Naming / Flow / Responsibility / Structure / Side Effects / Comments
 
 ## Guidelines
 
