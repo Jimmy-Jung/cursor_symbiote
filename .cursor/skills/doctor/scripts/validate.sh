@@ -572,7 +572,7 @@ if [ -f "$SYNAPSE_FILE" ]; then
   done
 
   # synapse.mdc에서 알려진 스킬 참조 확인
-  KNOWN_SKILL_REFS="code-accuracy planning clean-functions code-review design-principles tdd documentation mermaid refactoring reverse-engineering git-commit branch-convention merge-request autonomous-loop deep-search deep-index research ecomode prd ralplan build-fix cancel help verify-loop ast-refactor solid"
+  KNOWN_SKILL_REFS="code-accuracy planning clean-functions code-review design-principles tdd documentation mermaid refactoring reverse-engineering git-commit branch-convention merge-request autonomous-loop deep-search deep-index research ecomode prd ralplan build-fix cancel help verify-loop ast-refactor solid readable-code oop-design ribs-ios xcode-mcp xcodebuildmcp"
   for skill in $KNOWN_SKILL_REFS; do
     if echo "$EXISTING_SKILLS" | grep -qw "$skill"; then
       pass
@@ -591,7 +591,7 @@ if [ -f "$SYNAPSE_FILE" ]; then
   done
 
   # synapse.mdc에서 알려진 에이전트 참조 확인
-  KNOWN_AGENT_REFS="analyst planner architect critic implementer designer debugger migrator build-fixer reviewer qa-tester security-reviewer doc-writer vision researcher tdd-guide"
+  KNOWN_AGENT_REFS="analyst planner architect critic implementer designer debugger migrator build-fixer reviewer qa-tester security-reviewer doc-writer vision researcher tdd-guide explorer monitor"
   for agent in $KNOWN_AGENT_REFS; do
     if echo "$EXISTING_AGENTS" | grep -qw "$agent"; then
       pass
