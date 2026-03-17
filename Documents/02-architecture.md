@@ -45,11 +45,11 @@ flowchart TB
     end
     
     subgraph Skills["Skill Layer"]
-        SK["34개 스킬<br/>도메인별 지식과 워크플로우"]
+        SK["40개 스킬<br/>도메인별 지식과 워크플로우"]
     end
     
     subgraph Commands["Command Layer"]
-        CMD["9개 커맨드<br/>사용자 트리거 매크로"]
+        CMD["10개 커맨드<br/>사용자 트리거 매크로"]
     end
     
     subgraph Hooks["Hook Layer"]

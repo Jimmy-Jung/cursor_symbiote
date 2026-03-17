@@ -16,7 +16,7 @@
 │       ├── context.mdc             # 프로젝트 컨텍스트 (alwaysApply: true)
 │       └── *.mdc                   # 플랫폼, 프레임워크, 아키텍처 룰
 │
-├── commands/                       # 슬래시 커맨드 (10개, 순수 마크다운)
+├── commands/                       # 슬래시 커맨드 (20개, 순수 마크다운)
 │   ├── autopilot.md                # 4-Phase 자동 실행
 │   ├── ralph.md                    # 완료까지 자율 반복
 │   ├── pipeline.md                 # 에이전트 체이닝
@@ -26,9 +26,19 @@
 │   ├── analyze.md                  # 분석 세션
 │   ├── solid-review.md             # SOLID 원칙 분석
 │   ├── stats.md                    # 사용 통계 조회
-│   └── clean.md                    # state 폴더 정리
+│   ├── clean.md                    # state 폴더 정리
+│   ├── tm-init.md                  # Task Master 상태 초기화
+│   ├── tm-init-manual.md           # Task Master 수동 초기화
+│   ├── tm-parse-prd.md             # PRD를 task graph로 변환
+│   ├── tm-validate.md              # Task Master 구조 검증
+│   ├── tm-board.md                 # task graph 보드
+│   ├── tm-next.md                  # 다음 task 선택
+│   ├── tm-start.md                 # task 시작
+│   ├── tm-sync.md                  # task 상태 동기화
+│   ├── tm-expand.md                # subtasks 분해
+│   └── tm-done.md                  # task 완료 반영
 │
-├── skills/                         # Agent Skills (34개)
+├── skills/                         # Agent Skills (40개)
 │   ├── {skill-name}/
 │   │   ├── SKILL.md                # 필수: frontmatter + 워크플로우
 │   │   ├── scripts/                # 선택: 실행 스크립트
@@ -60,6 +70,11 @@
 │   │
 │   │ # 설계 원칙
 │   ├── design-principles/          # OOP + SOLID 원칙
+│   ├── readable-code/              # 사람이 읽기 쉬운 코드 기준
+│   ├── oop-design/                 # OOP 설계 및 다이어그램
+│   ├── ribs-ios/                   # Uber RIBs-iOS 구조 점검
+│   ├── xcode-mcp/                  # Xcode MCP bridge 연동
+│   ├── xcodebuildmcp/              # Apple 플랫폼 XcodeBuildMCP 가이드
 │   ├── tdd/                        # 테스트 주도 개발
 │   │
 │   │ # 리팩토링 및 분석
@@ -89,13 +104,25 @@
 │   │   └── .env.example            #   환경 변수 템플릿
 │   └── solid/                      # SOLID 검증
 │
-├── agents/                         # 커스텀 서브에이전트 (6개)
+├── agents/                         # 커스텀 서브에이전트 (18개)
 │   ├── analyst.md                  # Metis — 사전 분석
+│   ├── explorer.md                 # 읽기 전용 탐색
 │   ├── planner.md                  # Prometheus — 전략 기획
 │   ├── critic.md                   # Momus — 계획 검증
 │   ├── implementer.md              # Executor — 코드 구현
+│   ├── monitor.md                  # 장기 실행 상태 추적
 │   ├── debugger.md                 # 디버깅
-│   └── reviewer.md                 # 코드 리뷰
+│   ├── reviewer.md                 # 코드 리뷰
+│   ├── architect.md                # 아키텍처 분석
+│   ├── build-fixer.md              # 빌드 오류 수정
+│   ├── designer.md                 # UI/UX 분석
+│   ├── doc-writer.md               # 문서 작성
+│   ├── migrator.md                 # 마이그레이션
+│   ├── qa-tester.md                # QA 검증
+│   ├── researcher.md               # 기술 리서치
+│   ├── security-reviewer.md        # 보안 취약점 분석
+│   ├── tdd-guide.md                # TDD 가이드
+│   └── vision.md                   # 시각적 분석
 │
 ├── hooks.json                      # 훅 이벤트 설정
 ├── hooks/                          # 훅 스크립트 (6개)
@@ -128,6 +155,10 @@
 └── project/                        # 프로젝트 상태 (/setup 후 생성)
     ├── manifest.json.template      # manifest 템플릿
     ├── VERSION                     # 설정 버전
+    ├── taskmaster/                 # Task Master 템플릿/스키마
+    │   ├── *.template.json         # runtime 초기화 템플릿
+    │   ├── *.schema.json           # 구조 검증 스키마
+    │   └── *.example.json          # 예시 데이터
     ├── history/                    # 진화 히스토리
     ├── usage-data/                 # 사용 빈도 추적 데이터 (자동 생성)
     │   ├── .tracked-since          # 추적 시작일
