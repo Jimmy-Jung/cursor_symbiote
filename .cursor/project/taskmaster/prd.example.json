@@ -1,0 +1,98 @@
+{
+  "version": "1.0.0",
+  "title": "사용자 인증 시스템",
+  "description": "JWT 기반 사용자 인증 및 권한 관리 시스템 구축",
+  "completionLevel": 3,
+  "createdAt": "2026-03-18T10:00:00Z",
+  "updatedAt": "2026-03-18T10:00:00Z",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "로그인 기능",
+      "as": "사용자",
+      "iWant": "이메일과 비밀번호로 로그인",
+      "soThat": "개인화된 서비스를 이용할 수 있다",
+      "status": "pending",
+      "priority": "high",
+      "dependsOn": [],
+      "acceptanceCriteria": [
+        "유효한 이메일과 비밀번호로 로그인 성공",
+        "잘못된 자격증명 시 명확한 에러 메시지 표시",
+        "JWT 토큰을 로컬 스토리지에 안전하게 저장",
+        "로그인 후 대시보드로 리다이렉트"
+      ],
+      "implementedIn": [],
+      "blockedReason": null
+    },
+    {
+      "id": "US-002",
+      "title": "회원가입 기능",
+      "as": "신규 사용자",
+      "iWant": "계정을 생성",
+      "soThat": "서비스를 이용할 수 있다",
+      "status": "pending",
+      "priority": "high",
+      "dependsOn": [],
+      "acceptanceCriteria": [
+        "이메일, 비밀번호, 이름 입력 폼 제공",
+        "이메일 중복 검증",
+        "비밀번호 강도 검증 (8자 이상, 특수문자 포함)",
+        "회원가입 성공 시 자동 로그인"
+      ],
+      "implementedIn": [],
+      "blockedReason": null
+    },
+    {
+      "id": "US-003",
+      "title": "토큰 갱신",
+      "as": "시스템",
+      "iWant": "만료 예정 토큰을 자동 갱신",
+      "soThat": "사용자 세션이 끊기지 않는다",
+      "status": "pending",
+      "priority": "medium",
+      "dependsOn": ["US-001"],
+      "acceptanceCriteria": [
+        "토큰 만료 5분 전 자동 갱신 요청",
+        "갱신 실패 시 로그아웃 처리",
+        "갱신 중 사용자 경험 중단 없음"
+      ],
+      "implementedIn": [],
+      "blockedReason": null
+    }
+  ],
+  "risks": [
+    {
+      "description": "JWT 시크릿 키 노출 위험",
+      "impact": "high",
+      "mitigation": "환경 변수로 관리하고 .env 파일을 .gitignore에 추가"
+    },
+    {
+      "description": "비밀번호 평문 저장",
+      "impact": "high",
+      "mitigation": "bcrypt로 해싱하여 저장"
+    },
+    {
+      "description": "CSRF 공격 취약점",
+      "impact": "medium",
+      "mitigation": "CSRF 토큰 검증 미들웨어 추가"
+    }
+  ],
+  "scope": {
+    "inScope": [
+      "이메일/비밀번호 기반 인증",
+      "JWT 토큰 발급 및 검증",
+      "토큰 자동 갱신",
+      "기본 권한 관리"
+    ],
+    "outOfScope": [
+      "소셜 로그인 (OAuth)",
+      "2단계 인증 (2FA)",
+      "비밀번호 찾기",
+      "세션 관리 UI"
+    ]
+  },
+  "metadata": {
+    "taskFolder": "20260318T1000_auth-system",
+    "tag": "master"
+  }
+}
