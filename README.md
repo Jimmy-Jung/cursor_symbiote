@@ -169,9 +169,6 @@ setup이 `.cursor.back`을 자동 감지하여 이전 설정을 분석합니다.
 │   ├── design-principles/          # OOP + SOLID 원칙
 │   ├── readable-code/              # 사람이 읽기 쉬운 코드 기준
 │   ├── oop-design/                 # OOP 설계와 다이어그램 중심 설계
-│   ├── ribs-ios/                   # Uber RIBs-iOS 구조 점검 및 이관
-│   ├── xcode-mcp/                  # Xcode MCP bridge 연동 가이드
-│   ├── xcodebuildmcp/              # Apple 플랫폼 XcodeBuildMCP 운영 가이드
 │   ├── solid/                      # SOLID 원칙 분석 및 검증
 │   ├── tdd/                        # 테스트 주도 개발
 │   │
