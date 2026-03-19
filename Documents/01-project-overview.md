@@ -85,7 +85,7 @@ Agent에 전문 기능을 확장하는 지식 패키지입니다. Core 4개(code
 - 핵심 워크플로우: setup, evolve, autonomous-loop, ralplan, cancel
 - 탐색/분석: deep-search, deep-index, research, lsp
 - 코드 품질: code-accuracy, verify-loop, clean-functions, comment-checker, code-review, security-review, build-fix
-- 설계 원칙: design-principles, readable-code, oop-design, ribs-ios, xcode-mcp, xcodebuildmcp, solid, tdd
+- 설계 원칙: design-principles, readable-code, oop-design, solid, tdd
 - 문서/다이어그램: documentation, mermaid, prd
 - Git: git-commit, branch-convention, merge-request
 - 시스템 관리: ecomode, doctor, learner, help, note, notify-user
