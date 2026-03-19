@@ -11,43 +11,65 @@ source: origin
 ## PR 제목 컨벤션
 
 형식: `type(scope): subject`
+- type(scope)는 영어로, subject는 한글로 작성
 
 ### 타입 표
 
-| 타입 | 설명 |
-|-----|------|
-| feat | 새로운 기능 |
-| fix | 버그 수정 |
-| refactor | 리팩토링 (동작 변경 없음) |
-| docs | 문서 변경 |
-| test | 테스트 추가/수정 |
-| chore | 빌드, 설정, 유지보수 |
-| style | 포맷팅, 공백 등 (로직 변경 없음) |
-| perf | 성능 개선 |
-| ci | CI 설정 변경 |
-| build | 빌드 시스템 변경 |
-| revert | 이전 커밋 되돌리기 |
-
-예시: `feat(auth): add OAuth2 login flow`, `fix(api): handle null response`
+| 타입 | 설명 | 예시 |
+|-----|------|------|
+| feat | 새로운 기능 | feat(auth): OAuth2 로그인 플로우 추가 |
+| fix | 버그 수정 | fix(api): null 응답 처리 개선 |
+| refactor | 리팩토링 (동작 변경 없음) | refactor(user): 사용자 검증 로직 분리 |
+| docs | 문서 변경 | docs: API 문서 업데이트 |
+| test | 테스트 추가/수정 | test(auth): 로그인 테스트 케이스 추가 |
+| chore | 빌드, 설정, 유지보수 | chore: 의존성 업그레이드 |
+| style | 포맷팅, 공백 등 (로직 변경 없음) | style: 코드 포맷 통일 |
+| perf | 성능 개선 | perf(query): 데이터베이스 쿼리 최적화 |
+| ci | CI 설정 변경 | ci: GitHub Actions 워크플로우 추가 |
+| build | 빌드 시스템 변경 | build: Webpack 설정 개선 |
+| revert | 이전 커밋 되돌리기 | revert: feat(auth) 되돌리기 |
 
 ---
 
 ## PR 본문 템플릿
+
+PR 본문은 한글로 작성하되, 섹션 제목은 영어로 유지합니다.
 
 ### Summary (요약)
 
 - 변경 사항을 불릿 포인트로 요약
 - 영향 받는 모듈/기능 명시
 
+예시:
+```
+- 소셜 로그인 기능 추가 (Google, GitHub)
+- JWT 토큰 발급 로직 통합
+- 기존 이메일 로그인과 호환성 유지
+```
+
 ### Motivation / Context (동기 및 맥락)
 
-- 이 변경이 필요한 이유
+- 이 변경이 필요한 이유를 한글로 설명
 - 해결하려는 문제 설명
+
+예시:
+```
+기존 이메일 로그인만으로는 사용자 진입 장벽이 높아
+소셜 로그인 옵션을 추가했습니다. 사용자 편의성 향상과
+회원 가입률 개선이 목표입니다.
+```
 
 ### Changes (변경 사항)
 
-- 구체적으로 무엇이 변경되었는지
+- 구체적으로 무엇이 변경되었는지 한글로 기술
 - 주요 파일별 변경 내용
+
+예시:
+```
+- `auth/oauth.ts`: OAuth2 인증 플로우 구현
+- `auth/jwt.ts`: 통합 토큰 발급 로직
+- `components/LoginButton.tsx`: 소셜 로그인 버튼 추가
+```
 
 ### Test Plan (테스트 계획)
 
@@ -57,7 +79,7 @@ source: origin
 
 ### Breaking Changes (호환성 변경)
 
-- 있으면 구체적으로 명시
+- 있으면 구체적으로 한글로 명시
 - 마이그레이션 가이드가 필요하면 포함
 - 없으면 N/A
 
@@ -121,8 +143,22 @@ Squash and merge 권장: 여러 커밋을 하나로 합쳐 main 브랜치 히스
 ### GitHub (gh)
 
 ```bash
-# PR 생성
-gh pr create --title "type(scope): subject" --body "본문"
+# PR 생성 (제목은 한글)
+gh pr create --title "feat(auth): 소셜 로그인 기능 추가" --body "$(cat <<'EOF'
+## Summary
+- 소셜 로그인 기능 추가 (Google, GitHub)
+- JWT 토큰 발급 로직 통합
+
+## Motivation
+사용자 진입 장벽 개선을 위한 소셜 로그인 옵션 추가
+
+## Test Plan
+- [x] 단위 테스트 통과
+- [x] 수동 테스트 완료
+
+Closes #123
+EOF
+)"
 
 # PR 머지
 gh pr merge --squash
@@ -134,8 +170,15 @@ gh pr list
 ### GitLab (glab)
 
 ```bash
-# MR 생성
-glab mr create --title "type(scope): subject" --description "본문"
+# MR 생성 (제목은 한글)
+glab mr create --title "feat(auth): 소셜 로그인 기능 추가" --description "$(cat <<'EOF'
+## Summary
+- 소셜 로그인 기능 추가 (Google, GitHub)
+- JWT 토큰 발급 로직 통합
+
+Closes #123
+EOF
+)"
 
 # MR 머지
 glab mr merge
