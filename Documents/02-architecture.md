@@ -1,6 +1,6 @@
 # 아키텍처
 
-> 저자: jimmy | 날짜: 2026-02-16
+> 저자: jimmy | 날짜: 2026-03-18
 
 ## 개요
 
@@ -181,3 +181,68 @@ Execution Layer (필수, 1):    default | orchestrate | planner
 | 기획 | planner + deep-search |
 | 검증 | reviewer + qa-tester |
 | 탐색 | Grep + SemanticSearch + Glob |
+
+## Task Master 시스템
+
+Task Master는 복잡한 Feature의 요구사항을 task graph로 관리하는 시스템입니다. PRD 스킬과 통합되어 user stories → tasks 변환 파이프라인을 제공합니다.
+
+### 구성 요소
+
+| 구성 요소 | 역할 | 위치 |
+|----------|------|------|
+| 스키마/템플릿 | prd, tasks, state, config 구조 정의 | `.cursor/project/taskmaster/` |
+| PRD 스킬 | 요구사항 정형화, prd.json 생성 | `.cursor/skills/prd/` |
+| tm-* 커맨드 | 초기화, 파싱, 검증, 실행 흐름 | `.cursor/commands/tm-*.md` |
+| 런타임 상태 | prd.json, task.json, state.json, config.json | `state/{task-folder}/` 또는 `taskmaster/` |
+
+### PRD 스킬 ↔ Task Master 연동
+
+```mermaid
+flowchart LR
+    subgraph PRD["PRD Skill"]
+        A[Interview] --> B[prd.json 생성]
+        B --> C[prd-to-md.sh]
+        C --> D[prd.md]
+    end
+    
+    subgraph TM["Task Master"]
+        E[/tm-parse-prd]
+        F[task.json]
+        G[/tm-validate]
+        H[/tm-start]
+        I[/tm-next]
+        J[/tm-done]
+    end
+    
+    subgraph State["state/{task-folder}/"]
+        K[prd.json]
+        L[prd.md]
+        M[task.json]
+    end
+    
+    B -.->|저장| K
+    D -.->|저장| L
+    K --> E
+    E --> F
+    F -.->|저장| M
+    B --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+```
+
+### 워크플로우
+
+1. PRD Mode ("요구사항 정리", "PRD") → prd 스킬 로드
+2. Analyst 인터뷰 + PRD 스킬 → prd.json 생성 (`state/{task-folder}/prd.json`)
+3. `prd-to-md.sh` (선택) → prd.md 가독성 보조 파일
+4. `/tm-parse-prd` → prd.json → task.json 변환
+5. `/tm-validate` → 스키마 검증
+6. `/tm-start`, `/tm-next`, `/tm-done` → task 실행 흐름
+
+### autonomous-loop 연동
+
+- autonomous-loop 실행 시 prd.json이 있으면 자동 로드
+- userStories[].acceptanceCriteria를 verify 단계 검증 항목으로 사용
