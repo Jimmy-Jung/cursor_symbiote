@@ -86,9 +86,6 @@ Extended 스킬 (필요 시에만 로드):
 - solid — SOLID 원칙 기반 객체지향 설계 분석
 - readable-code — 이름, 흐름, 책임, 부작용 관점의 가독성 기준
 - oop-design — OOP 설계와 클래스/흐름 다이어그램
-- ribs-ios — Uber RIBs-iOS 구조 점검 및 이관
-- xcode-mcp — Xcode MCP bridge와 Xcode Intelligence 연동
-- xcodebuildmcp — Apple 플랫폼 작업용 XcodeBuildMCP 운영 가이드
 - 나머지 스킬은 작업 맥락에 따라 선택적으로 로드
 - 단순 작업에서 Extended 스킬을 불필요하게 읽지 않음
 
